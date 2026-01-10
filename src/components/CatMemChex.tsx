@@ -383,7 +383,7 @@ const CatMemChex = () => {
               6
             </span>
           </motion.div>
-          <h1 className="text-4xl sm:text-5xl font-extrabold holographic-text" style={{ fontFamily: "'Comic Sans MS', 'Chalkboard', 'Marker Felt', cursive" }}>
+          <h1 className="text-4xl sm:text-5xl font-bold holographic-text" style={{ fontFamily: "'Fredoka', sans-serif" }}>
             ReliabilityTest
           </h1>
           <motion.div
