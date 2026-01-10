@@ -236,29 +236,102 @@ interface CatCardProps {
 }
 
 const CatCard = ({ image, name, score, onHot, onNot, isAnimating, hearts, isExiting, exitDirection }: CatCardProps) => {
+  const [touchStart, setTouchStart] = useState<{ x: number; y: number } | null>(null);
+  const [touchCurrent, setTouchCurrent] = useState<{ x: number; y: number } | null>(null);
+  const [swiping, setSwiping] = useState(false);
+
+  const swipeThreshold = 80;
+  const swipeDelta = touchStart && touchCurrent ? touchCurrent.x - touchStart.x : 0;
+  const swipeProgress = Math.min(Math.abs(swipeDelta) / swipeThreshold, 1);
+  const swipeDirection = swipeDelta > 0 ? "right" : "left";
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (isExiting) return;
+    const touch = e.touches[0];
+    setTouchStart({ x: touch.clientX, y: touch.clientY });
+    setTouchCurrent({ x: touch.clientX, y: touch.clientY });
+    setSwiping(true);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!swiping || isExiting) return;
+    const touch = e.touches[0];
+    setTouchCurrent({ x: touch.clientX, y: touch.clientY });
+  };
+
+  const handleTouchEnd = () => {
+    if (!swiping || isExiting) return;
+    
+    if (Math.abs(swipeDelta) >= swipeThreshold) {
+      if (swipeDirection === "right") {
+        onHot();
+      } else {
+        onNot();
+      }
+    }
+    
+    setTouchStart(null);
+    setTouchCurrent(null);
+    setSwiping(false);
+  };
+
   return (
     <div className="group relative flex flex-col items-center">
       {/* Card */}
       <AnimatePresence mode="wait">
         <motion.div 
           key={`${name}-${image}`}
-          className="relative overflow-visible rounded-3xl glass shadow-card transition-all duration-500 hover:shadow-card-hover hover:-translate-y-2"
+          className="relative overflow-visible rounded-3xl glass shadow-card transition-all duration-500 hover:shadow-card-hover hover:-translate-y-2 touch-pan-y select-none"
           initial={{ opacity: 0, scale: 0.8, x: 0 }}
           animate={{ 
             opacity: isExiting ? 0 : 1, 
             scale: isExiting ? 0.8 : 1,
-            x: isExiting ? (exitDirection === "right" ? 200 : -200) : 0,
-            rotate: isExiting ? (exitDirection === "right" ? 15 : -15) : 0,
+            x: isExiting ? (exitDirection === "right" ? 200 : -200) : (swiping ? swipeDelta * 0.5 : 0),
+            rotate: isExiting ? (exitDirection === "right" ? 15 : -15) : (swiping ? swipeDelta * 0.05 : 0),
           }}
           exit={{ opacity: 0, scale: 0.8, x: exitDirection === "right" ? 200 : -200 }}
-          transition={{ duration: 0.4, ease: "easeOut" }}
+          transition={{ duration: swiping ? 0 : 0.4, ease: "easeOut" }}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
         >
+          {/* Swipe Indicators */}
+          {swiping && swipeProgress > 0.2 && (
+            <>
+              <motion.div 
+                className="absolute inset-0 rounded-3xl z-10 pointer-events-none flex items-center justify-center"
+                initial={{ opacity: 0 }}
+                animate={{ 
+                  opacity: swipeDirection === "right" ? swipeProgress * 0.8 : 0,
+                  background: "linear-gradient(135deg, hsla(340, 82%, 52%, 0.3), transparent)"
+                }}
+              >
+                <div className="bg-primary/90 rounded-full p-4">
+                  <Flame className="w-10 h-10 text-white" />
+                </div>
+              </motion.div>
+              <motion.div 
+                className="absolute inset-0 rounded-3xl z-10 pointer-events-none flex items-center justify-center"
+                initial={{ opacity: 0 }}
+                animate={{ 
+                  opacity: swipeDirection === "left" ? swipeProgress * 0.8 : 0,
+                  background: "linear-gradient(135deg, hsla(0, 0%, 50%, 0.3), transparent)"
+                }}
+              >
+                <div className="bg-muted-foreground/90 rounded-full p-4">
+                  <X className="w-10 h-10 text-white" />
+                </div>
+              </motion.div>
+            </>
+          )}
+
           {/* Image Container */}
           <div className="relative w-64 h-80 sm:w-72 sm:h-96 overflow-hidden rounded-3xl">
             <img
               src={image}
               alt={name}
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              draggable={false}
             />
             
             {/* Gradient Overlay */}
