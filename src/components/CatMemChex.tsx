@@ -527,16 +527,34 @@ const CatCard = ({ image, name, score, onHot, onNot, isAnimating, hearts, isExit
 };
 
 const CatMemChex = () => {
-  const [selectedRegion, setSelectedRegion] = useState<Region>("All");
+  const [selectedRegion, setSelectedRegion] = useState<Region>(() => {
+    const saved = localStorage.getItem("catmemchex-region");
+    return saved ? (saved as Region) : "All";
+  });
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  
+  // Persist voted model IDs
+  const [votedModels, setVotedModels] = useState<Set<number>>(() => {
+    const saved = localStorage.getItem("catmemchex-voted");
+    return saved ? new Set(JSON.parse(saved)) : new Set();
+  });
   
   const filteredModels = selectedRegion === "All" 
     ? models 
     : models.filter(m => m.region === selectedRegion);
 
-  const [currentModels, setCurrentModels] = useState<{ card1: number; card2: number }>({
-    card1: 0,
-    card2: 1,
+  // Get unvoted models for current filter
+  const getUnvotedModels = useCallback((region: Region) => {
+    const filtered = region === "All" ? models : models.filter(m => m.region === region);
+    return filtered.filter(m => !votedModels.has(m.id));
+  }, [votedModels]);
+
+  const [currentModels, setCurrentModels] = useState<{ card1: number; card2: number }>(() => {
+    const saved = localStorage.getItem("catmemchex-current");
+    if (saved) {
+      return JSON.parse(saved);
+    }
+    return { card1: 0, card2: 1 };
   });
 
   const [scores, setScores] = useState<Record<number, number>>(() => {
@@ -577,9 +595,25 @@ const CatMemChex = () => {
     return audioContextRef.current;
   }, []);
 
+  // Persist scores
   useEffect(() => {
     localStorage.setItem("catmemchex-scores-v2", JSON.stringify(scores));
   }, [scores]);
+
+  // Persist current models
+  useEffect(() => {
+    localStorage.setItem("catmemchex-current", JSON.stringify(currentModels));
+  }, [currentModels]);
+
+  // Persist voted models
+  useEffect(() => {
+    localStorage.setItem("catmemchex-voted", JSON.stringify([...votedModels]));
+  }, [votedModels]);
+
+  // Persist selected region
+  useEffect(() => {
+    localStorage.setItem("catmemchex-region", selectedRegion);
+  }, [selectedRegion]);
 
   // Reset cards when filter changes
   useEffect(() => {
@@ -635,8 +669,10 @@ const CatMemChex = () => {
   };
 
   const handleHot = (card: "card1" | "card2") => {
-    const modelId = models[currentModels[card]].id;
+    const model = filteredModels[currentModels[card]];
+    const modelId = model.id;
     setScores((prev) => ({ ...prev, [modelId]: (prev[modelId] || 0) + 1 }));
+    setVotedModels((prev) => new Set([...prev, modelId]));
     setAnimating((prev) => ({ ...prev, [card]: true }));
     spawnHearts(card);
     playHotSound(getAudioContext());
@@ -648,6 +684,9 @@ const CatMemChex = () => {
   };
 
   const handleNot = (card: "card1" | "card2") => {
+    const model = filteredModels[currentModels[card]];
+    const modelId = model.id;
+    setVotedModels((prev) => new Set([...prev, modelId]));
     setAnimating((prev) => ({ ...prev, [card]: true }));
     playNotSound(getAudioContext());
     
