@@ -1,9 +1,77 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { Heart, Flame, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import cat1Image from "@/assets/cat1.jpg";
 import cat2Image from "@/assets/cat2.jpg";
+
+// Sound effect utilities using Web Audio API
+const createAudioContext = () => {
+  return new (window.AudioContext || (window as any).webkitAudioContext)();
+};
+
+const playHotSound = (audioContext: AudioContext) => {
+  // Sexy rising arpeggio with warmth
+  const now = audioContext.currentTime;
+  const notes = [440, 554, 659, 880]; // A4, C#5, E5, A5 - major chord arpeggio
+  
+  notes.forEach((freq, i) => {
+    const osc = audioContext.createOscillator();
+    const gain = audioContext.createGain();
+    const filter = audioContext.createBiquadFilter();
+    
+    filter.type = "lowpass";
+    filter.frequency.value = 2000;
+    
+    osc.type = "sine";
+    osc.frequency.value = freq;
+    
+    osc.connect(filter);
+    filter.connect(gain);
+    gain.connect(audioContext.destination);
+    
+    const startTime = now + i * 0.08;
+    gain.gain.setValueAtTime(0, startTime);
+    gain.gain.linearRampToValueAtTime(0.15, startTime + 0.05);
+    gain.gain.exponentialRampToValueAtTime(0.01, startTime + 0.4);
+    
+    osc.start(startTime);
+    osc.stop(startTime + 0.5);
+  });
+  
+  // Add a soft shimmer
+  const shimmer = audioContext.createOscillator();
+  const shimmerGain = audioContext.createGain();
+  shimmer.type = "triangle";
+  shimmer.frequency.value = 1760;
+  shimmer.connect(shimmerGain);
+  shimmerGain.connect(audioContext.destination);
+  shimmerGain.gain.setValueAtTime(0, now + 0.2);
+  shimmerGain.gain.linearRampToValueAtTime(0.08, now + 0.3);
+  shimmerGain.gain.exponentialRampToValueAtTime(0.01, now + 0.8);
+  shimmer.start(now + 0.2);
+  shimmer.stop(now + 1);
+};
+
+const playNotSound = (audioContext: AudioContext) => {
+  // Soft descending womp
+  const now = audioContext.currentTime;
+  const osc = audioContext.createOscillator();
+  const gain = audioContext.createGain();
+  
+  osc.type = "sine";
+  osc.frequency.setValueAtTime(300, now);
+  osc.frequency.exponentialRampToValueAtTime(150, now + 0.3);
+  
+  osc.connect(gain);
+  gain.connect(audioContext.destination);
+  
+  gain.gain.setValueAtTime(0.12, now);
+  gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+  
+  osc.start(now);
+  osc.stop(now + 0.4);
+};
 
 interface FloatingHeart {
   id: number;
@@ -132,6 +200,18 @@ const CatMemChex = () => {
   });
 
   const [heartId, setHeartId] = useState(0);
+  const audioContextRef = useRef<AudioContext | null>(null);
+
+  // Initialize audio context on first interaction
+  const getAudioContext = useCallback(() => {
+    if (!audioContextRef.current) {
+      audioContextRef.current = createAudioContext();
+    }
+    if (audioContextRef.current.state === "suspended") {
+      audioContextRef.current.resume();
+    }
+    return audioContextRef.current;
+  }, []);
 
   useEffect(() => {
     localStorage.setItem("catmemchex-scores", JSON.stringify(scores));
@@ -162,11 +242,13 @@ const CatMemChex = () => {
     setScores((prev) => ({ ...prev, [cat]: prev[cat] + 1 }));
     setAnimating((prev) => ({ ...prev, [cat]: true }));
     spawnHearts(cat);
+    playHotSound(getAudioContext());
     setTimeout(() => setAnimating((prev) => ({ ...prev, [cat]: false })), 300);
   };
 
   const handleNot = (cat: "cat1" | "cat2") => {
     setAnimating((prev) => ({ ...prev, [cat]: true }));
+    playNotSound(getAudioContext());
     setTimeout(() => setAnimating((prev) => ({ ...prev, [cat]: false })), 300);
   };
 
