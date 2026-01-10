@@ -256,7 +256,45 @@ const CatMemChex = () => {
     <div className="min-h-screen bg-background flex flex-col overflow-hidden">
       {/* Header */}
       <header className="py-8 px-4 text-center">
-        <div className="flex items-center justify-center gap-3 mb-2">
+        <div className="flex items-center justify-center gap-3 mb-2 relative">
+          {/* Sparkle particles */}
+          {[...Array(12)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute pointer-events-none"
+              style={{
+                left: `${10 + (i % 6) * 15}%`,
+                top: `${i < 6 ? -10 : 100}%`,
+              }}
+              animate={{
+                y: [0, -20, 0],
+                x: [0, (i % 2 === 0 ? 10 : -10), 0],
+                opacity: [0, 1, 0],
+                scale: [0, 1.2, 0],
+                rotate: [0, 180, 360],
+              }}
+              transition={{
+                duration: 2 + Math.random(),
+                repeat: Infinity,
+                delay: i * 0.2,
+                ease: "easeInOut",
+              }}
+            >
+              <svg 
+                width="16" 
+                height="16" 
+                viewBox="0 0 24 24" 
+                fill="none"
+                className="drop-shadow-lg"
+              >
+                <path 
+                  d="M12 0L14.59 8.41L23 11L14.59 13.59L12 22L9.41 13.59L1 11L9.41 8.41L12 0Z" 
+                  fill={`hsl(${(i * 60) % 360}, 100%, 70%)`}
+                />
+              </svg>
+            </motion.div>
+          ))}
+          
           <motion.div
             animate={{ y: [0, -8, 0] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
