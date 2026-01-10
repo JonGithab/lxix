@@ -180,3 +180,16 @@
 .animate-pulse-heart {
   animation: pulse-heart 0.3s ease-in-out;
 }
+
+@keyframes glow-pulse {
+  0%, 100% {
+    text-shadow: 0 0 20px hsl(340 82% 62% / 0.5), 0 0 40px hsl(340 82% 62% / 0.3), 0 4px 8px hsl(340 82% 62% / 0.2);
+  }
+  50% {
+    text-shadow: 0 0 30px hsl(340 82% 62% / 0.7), 0 0 60px hsl(340 82% 62% / 0.5), 0 0 80px hsl(340 82% 62% / 0.3), 0 4px 12px hsl(340 82% 62% / 0.3);
+  }
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
