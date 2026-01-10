@@ -22,6 +22,16 @@ import model17Image from "@/assets/model17.jpg";
 import model18Image from "@/assets/model18.jpg";
 import model19Image from "@/assets/model19.jpg";
 import model20Image from "@/assets/model20.jpg";
+import model21Image from "@/assets/model21.jpg";
+import model22Image from "@/assets/model22.jpg";
+import model23Image from "@/assets/model23.jpg";
+import model24Image from "@/assets/model24.jpg";
+import model25Image from "@/assets/model25.jpg";
+import model26Image from "@/assets/model26.jpg";
+import model27Image from "@/assets/model27.jpg";
+import model28Image from "@/assets/model28.jpg";
+import model29Image from "@/assets/model29.jpg";
+import model30Image from "@/assets/model30.jpg";
 
 // Model data - diverse portrait pool
 const models = [
@@ -45,6 +55,16 @@ const models = [
   { id: 18, name: "Adaeze", image: model18Image },
   { id: 19, name: "Valentina", image: model19Image },
   { id: 20, name: "Sienna", image: model20Image },
+  { id: 21, name: "Ximena", image: model21Image },
+  { id: 22, name: "Camila", image: model22Image },
+  { id: 23, name: "Isabella", image: model23Image },
+  { id: 24, name: "Daniela", image: model24Image },
+  { id: 25, name: "Alejandra", image: model25Image },
+  { id: 26, name: "Yasmín", image: model26Image },
+  { id: 27, name: "Luciana", image: model27Image },
+  { id: 28, name: "Catalina", image: model28Image },
+  { id: 29, name: "Mariana", image: model29Image },
+  { id: 30, name: "Carolina", image: model30Image },
 ];
 
 // Sound effect utilities using Web Audio API
