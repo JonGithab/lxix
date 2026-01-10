@@ -122,11 +122,21 @@ import model117Image from "@/assets/model117.jpg";
 import model118Image from "@/assets/model118.jpg";
 import model119Image from "@/assets/model119.jpg";
 import model120Image from "@/assets/model120.jpg";
+import model121Image from "@/assets/model121.jpg";
+import model122Image from "@/assets/model122.jpg";
+import model123Image from "@/assets/model123.jpg";
+import model124Image from "@/assets/model124.jpg";
+import model125Image from "@/assets/model125.jpg";
+import model126Image from "@/assets/model126.jpg";
+import model127Image from "@/assets/model127.jpg";
+import model128Image from "@/assets/model128.jpg";
+import model129Image from "@/assets/model129.jpg";
+import model130Image from "@/assets/model130.jpg";
 
 // Region types
-type Region = "All" | "Global" | "Philippines" | "Colombia" | "Venezuela" | "Slavic" | "Korea" | "USA" | "Brazil" | "India" | "Romania";
+type Region = "All" | "Global" | "Philippines" | "Colombia" | "Venezuela" | "Slavic" | "Korea" | "USA" | "Brazil" | "India" | "Romania" | "Spain";
 
-const regions: Region[] = ["All", "Global", "Philippines", "Colombia", "Venezuela", "Slavic", "Korea", "USA", "Brazil", "India", "Romania"];
+const regions: Region[] = ["All", "Global", "Philippines", "Colombia", "Venezuela", "Slavic", "Korea", "USA", "Brazil", "India", "Romania", "Spain"];
 
 // Model data - diverse portrait pool with regions
 const models = [
@@ -258,6 +268,17 @@ const models = [
   { id: 118, name: "Denisa", image: model118Image, region: "Romania" as Region },
   { id: 119, name: "Madalina", image: model119Image, region: "Romania" as Region },
   { id: 120, name: "Alexandra", image: model120Image, region: "Romania" as Region },
+  // Spain
+  { id: 121, name: "Lucia", image: model121Image, region: "Spain" as Region },
+  { id: 122, name: "Carmen", image: model122Image, region: "Spain" as Region },
+  { id: 123, name: "Sofia", image: model123Image, region: "Spain" as Region },
+  { id: 124, name: "Paula", image: model124Image, region: "Spain" as Region },
+  { id: 125, name: "Marta", image: model125Image, region: "Spain" as Region },
+  { id: 126, name: "Alba", image: model126Image, region: "Spain" as Region },
+  { id: 127, name: "Maria", image: model127Image, region: "Spain" as Region },
+  { id: 128, name: "Claudia", image: model128Image, region: "Spain" as Region },
+  { id: 129, name: "Elena", image: model129Image, region: "Spain" as Region },
+  { id: 130, name: "Ines", image: model130Image, region: "Spain" as Region },
 ];
 
 // Sound effect utilities using Web Audio API
