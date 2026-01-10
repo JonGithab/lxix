@@ -112,11 +112,21 @@ import model107Image from "@/assets/model107.jpg";
 import model108Image from "@/assets/model108.jpg";
 import model109Image from "@/assets/model109.jpg";
 import model110Image from "@/assets/model110.jpg";
+import model111Image from "@/assets/model111.jpg";
+import model112Image from "@/assets/model112.jpg";
+import model113Image from "@/assets/model113.jpg";
+import model114Image from "@/assets/model114.jpg";
+import model115Image from "@/assets/model115.jpg";
+import model116Image from "@/assets/model116.jpg";
+import model117Image from "@/assets/model117.jpg";
+import model118Image from "@/assets/model118.jpg";
+import model119Image from "@/assets/model119.jpg";
+import model120Image from "@/assets/model120.jpg";
 
 // Region types
-type Region = "All" | "Global" | "Philippines" | "Colombia" | "Venezuela" | "Slavic" | "Korea" | "USA" | "Brazil" | "India";
+type Region = "All" | "Global" | "Philippines" | "Colombia" | "Venezuela" | "Slavic" | "Korea" | "USA" | "Brazil" | "India" | "Romania";
 
-const regions: Region[] = ["All", "Global", "Philippines", "Colombia", "Venezuela", "Slavic", "Korea", "USA", "Brazil", "India"];
+const regions: Region[] = ["All", "Global", "Philippines", "Colombia", "Venezuela", "Slavic", "Korea", "USA", "Brazil", "India", "Romania"];
 
 // Model data - diverse portrait pool with regions
 const models = [
@@ -237,6 +247,17 @@ const models = [
   { id: 108, name: "Tara", image: model108Image, region: "India" as Region },
   { id: 109, name: "Janhvi", image: model109Image, region: "India" as Region },
   { id: 110, name: "Pooja", image: model110Image, region: "India" as Region },
+  // Romania
+  { id: 111, name: "Ioana", image: model111Image, region: "Romania" as Region },
+  { id: 112, name: "Andreea", image: model112Image, region: "Romania" as Region },
+  { id: 113, name: "Raluca", image: model113Image, region: "Romania" as Region },
+  { id: 114, name: "Miruna", image: model114Image, region: "Romania" as Region },
+  { id: 115, name: "Alina", image: model115Image, region: "Romania" as Region },
+  { id: 116, name: "Elena", image: model116Image, region: "Romania" as Region },
+  { id: 117, name: "Cristina", image: model117Image, region: "Romania" as Region },
+  { id: 118, name: "Denisa", image: model118Image, region: "Romania" as Region },
+  { id: 119, name: "Madalina", image: model119Image, region: "Romania" as Region },
+  { id: 120, name: "Alexandra", image: model120Image, region: "Romania" as Region },
 ];
 
 // Sound effect utilities using Web Audio API
