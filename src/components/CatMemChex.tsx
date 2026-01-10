@@ -4,11 +4,19 @@ import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import cat1Image from "@/assets/cat1.jpg";
 import cat2Image from "@/assets/cat2.jpg";
+import cat3Image from "@/assets/cat3.jpg";
+import cat4Image from "@/assets/cat4.jpg";
+import cat5Image from "@/assets/cat5.jpg";
+import cat6Image from "@/assets/cat6.jpg";
 
-// Model data - can be extended with more models
+// Model data - expanded pool
 const models = [
   { id: 1, name: "Ginger", image: cat1Image },
   { id: 2, name: "Shadow", image: cat2Image },
+  { id: 3, name: "Pearl", image: cat3Image },
+  { id: 4, name: "Midnight", image: cat4Image },
+  { id: 5, name: "Tiger", image: cat5Image },
+  { id: 6, name: "Leo", image: cat6Image },
 ];
 
 // Sound effect utilities using Web Audio API
