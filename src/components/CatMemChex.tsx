@@ -384,11 +384,8 @@ const CatMemChex = () => {
             </span>
           </motion.div>
           <h1 
-            className="text-4xl sm:text-5xl font-bold text-primary drop-shadow-lg" 
-            style={{ 
-              fontFamily: "'Bubblegum Sans', cursive",
-              textShadow: '0 0 20px hsl(340 82% 62% / 0.5), 0 0 40px hsl(340 82% 62% / 0.3), 0 4px 8px hsl(340 82% 62% / 0.2)'
-            }}
+            className="text-4xl sm:text-5xl font-bold text-primary animate-glow-pulse" 
+            style={{ fontFamily: "'Bubblegum Sans', cursive" }}
           >
             ReliabilityTest
           </h1>
