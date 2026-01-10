@@ -609,7 +609,7 @@ const CatMemChex = () => {
             </span>
           </motion.div>
           <h1 className="text-4xl sm:text-5xl font-bold splash-title">
-            ReliabilityTest
+            Lovable
           </h1>
           <motion.div
             animate={{ y: [0, -8, 0] }}
