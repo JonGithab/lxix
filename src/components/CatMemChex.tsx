@@ -572,7 +572,7 @@ const CatMemChex = () => {
       {/* Footer */}
       <footer className="py-4 text-center">
         <p className="text-sm text-muted-foreground">
-          Tap <Flame className="w-4 h-4 inline text-primary" /> for Hot • Tap <X className="w-4 h-4 inline text-muted-foreground" /> for Not
+          Tap <Flame className="w-4 h-4 inline text-primary" /> for Pull • Tap <X className="w-4 h-4 inline text-muted-foreground" /> for Push
         </p>
       </footer>
     </div>
