@@ -53,7 +53,7 @@ import model48Image from "@/assets/model48.jpg";
 import model49Image from "@/assets/model49.jpg";
 import model50Image from "@/assets/model50.jpg";
 import model51Image from "@/assets/model51.jpg";
-import model52Image from "@/assets/model52.jpg";
+
 import model53Image from "@/assets/model53.jpg";
 import model54Image from "@/assets/model54.jpg";
 import model55Image from "@/assets/model55.jpg";
