@@ -152,11 +152,21 @@ import model147Image from "@/assets/model147.jpg";
 import model148Image from "@/assets/model148.jpg";
 import model149Image from "@/assets/model149.jpg";
 import model150Image from "@/assets/model150.jpg";
+import model151Image from "@/assets/model151.jpg";
+import model152Image from "@/assets/model152.jpg";
+import model153Image from "@/assets/model153.jpg";
+import model154Image from "@/assets/model154.jpg";
+import model155Image from "@/assets/model155.jpg";
+import model156Image from "@/assets/model156.jpg";
+import model157Image from "@/assets/model157.jpg";
+import model158Image from "@/assets/model158.jpg";
+import model159Image from "@/assets/model159.jpg";
+import model160Image from "@/assets/model160.jpg";
 
 // Region types
-type Region = "All" | "Global" | "Philippines" | "Colombia" | "Venezuela" | "Slavic" | "Korea" | "USA" | "Brazil" | "India" | "Romania" | "Spain" | "Vietnam" | "Thailand";
+type Region = "All" | "Global" | "Philippines" | "Colombia" | "Venezuela" | "Slavic" | "Korea" | "USA" | "Brazil" | "India" | "Romania" | "Spain" | "Vietnam" | "Thailand" | "Iran";
 
-const regions: Region[] = ["All", "Global", "Philippines", "Colombia", "Venezuela", "Slavic", "Korea", "USA", "Brazil", "India", "Romania", "Spain", "Vietnam", "Thailand"];
+const regions: Region[] = ["All", "Global", "Philippines", "Colombia", "Venezuela", "Slavic", "Korea", "USA", "Brazil", "India", "Romania", "Spain", "Vietnam", "Thailand", "Iran"];
 
 // Model data - diverse portrait pool with regions
 const models = [
@@ -321,6 +331,17 @@ const models = [
   { id: 148, name: "Noon", image: model148Image, region: "Thailand" as Region },
   { id: 149, name: "Kwan", image: model149Image, region: "Thailand" as Region },
   { id: 150, name: "Praew", image: model150Image, region: "Thailand" as Region },
+  // Iran
+  { id: 151, name: "Shirin", image: model151Image, region: "Iran" as Region },
+  { id: 152, name: "Nazanin", image: model152Image, region: "Iran" as Region },
+  { id: 153, name: "Maryam", image: model153Image, region: "Iran" as Region },
+  { id: 154, name: "Parisa", image: model154Image, region: "Iran" as Region },
+  { id: 155, name: "Leila", image: model155Image, region: "Iran" as Region },
+  { id: 156, name: "Niloufar", image: model156Image, region: "Iran" as Region },
+  { id: 157, name: "Anahita", image: model157Image, region: "Iran" as Region },
+  { id: 158, name: "Fatemeh", image: model158Image, region: "Iran" as Region },
+  { id: 159, name: "Yasmin", image: model159Image, region: "Iran" as Region },
+  { id: 160, name: "Darya", image: model160Image, region: "Iran" as Region },
 ];
 
 // Sound effect utilities using Web Audio API
