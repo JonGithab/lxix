@@ -239,11 +239,19 @@ const CatCard = ({ image, name, score, onHot, onNot, isAnimating, hearts, isExit
   const [touchStart, setTouchStart] = useState<{ x: number; y: number } | null>(null);
   const [touchCurrent, setTouchCurrent] = useState<{ x: number; y: number } | null>(null);
   const [swiping, setSwiping] = useState(false);
+  const [hasVibrated, setHasVibrated] = useState(false);
 
   const swipeThreshold = 80;
   const swipeDelta = touchStart && touchCurrent ? touchCurrent.x - touchStart.x : 0;
   const swipeProgress = Math.min(Math.abs(swipeDelta) / swipeThreshold, 1);
   const swipeDirection = swipeDelta > 0 ? "right" : "left";
+
+  // Haptic feedback when crossing threshold
+  const triggerHaptic = useCallback((pattern: number | number[]) => {
+    if ('vibrate' in navigator) {
+      navigator.vibrate(pattern);
+    }
+  }, []);
 
   const handleTouchStart = (e: React.TouchEvent) => {
     if (isExiting) return;
@@ -251,18 +259,30 @@ const CatCard = ({ image, name, score, onHot, onNot, isAnimating, hearts, isExit
     setTouchStart({ x: touch.clientX, y: touch.clientY });
     setTouchCurrent({ x: touch.clientX, y: touch.clientY });
     setSwiping(true);
+    setHasVibrated(false);
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
     if (!swiping || isExiting) return;
     const touch = e.touches[0];
     setTouchCurrent({ x: touch.clientX, y: touch.clientY });
+    
+    // Vibrate when crossing the threshold
+    const currentDelta = touch.clientX - (touchStart?.x || 0);
+    if (Math.abs(currentDelta) >= swipeThreshold && !hasVibrated) {
+      triggerHaptic(25);
+      setHasVibrated(true);
+    } else if (Math.abs(currentDelta) < swipeThreshold && hasVibrated) {
+      setHasVibrated(false);
+    }
   };
 
   const handleTouchEnd = () => {
     if (!swiping || isExiting) return;
     
     if (Math.abs(swipeDelta) >= swipeThreshold) {
+      // Strong vibration on action
+      triggerHaptic(swipeDirection === "right" ? [30, 50, 30] : [20]);
       if (swipeDirection === "right") {
         onHot();
       } else {
@@ -273,6 +293,7 @@ const CatCard = ({ image, name, score, onHot, onNot, isAnimating, hearts, isExit
     setTouchStart(null);
     setTouchCurrent(null);
     setSwiping(false);
+    setHasVibrated(false);
   };
 
   return (
