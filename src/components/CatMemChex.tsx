@@ -2,21 +2,29 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { Heart, Flame, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
-import cat1Image from "@/assets/cat1.jpg";
-import cat2Image from "@/assets/cat2.jpg";
-import cat3Image from "@/assets/cat3.jpg";
-import cat4Image from "@/assets/cat4.jpg";
-import cat5Image from "@/assets/cat5.jpg";
-import cat6Image from "@/assets/cat6.jpg";
+import model1Image from "@/assets/model1.jpg";
+import model2Image from "@/assets/model2.jpg";
+import model3Image from "@/assets/model3.jpg";
+import model4Image from "@/assets/model4.jpg";
+import model5Image from "@/assets/model5.jpg";
+import model6Image from "@/assets/model6.jpg";
+import model7Image from "@/assets/model7.jpg";
+import model8Image from "@/assets/model8.jpg";
+import model9Image from "@/assets/model9.jpg";
+import model10Image from "@/assets/model10.jpg";
 
-// Model data - expanded pool
+// Model data - diverse portrait pool
 const models = [
-  { id: 1, name: "Ginger", image: cat1Image },
-  { id: 2, name: "Shadow", image: cat2Image },
-  { id: 3, name: "Pearl", image: cat3Image },
-  { id: 4, name: "Midnight", image: cat4Image },
-  { id: 5, name: "Tiger", image: cat5Image },
-  { id: 6, name: "Leo", image: cat6Image },
+  { id: 1, name: "Ava", image: model1Image },
+  { id: 2, name: "Mei", image: model2Image },
+  { id: 3, name: "Sofia", image: model3Image },
+  { id: 4, name: "Emma", image: model4Image },
+  { id: 5, name: "Layla", image: model5Image },
+  { id: 6, name: "Priya", image: model6Image },
+  { id: 7, name: "Ruby", image: model7Image },
+  { id: 8, name: "Amara", image: model8Image },
+  { id: 9, name: "Luna", image: model9Image },
+  { id: 10, name: "Yuki", image: model10Image },
 ];
 
 // Sound effect utilities using Web Audio API
