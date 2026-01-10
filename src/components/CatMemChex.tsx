@@ -42,6 +42,36 @@ import model37Image from "@/assets/model37.jpg";
 import model38Image from "@/assets/model38.jpg";
 import model39Image from "@/assets/model39.jpg";
 import model40Image from "@/assets/model40.jpg";
+import model41Image from "@/assets/model41.jpg";
+import model42Image from "@/assets/model42.jpg";
+import model43Image from "@/assets/model43.jpg";
+import model44Image from "@/assets/model44.jpg";
+import model45Image from "@/assets/model45.jpg";
+import model46Image from "@/assets/model46.jpg";
+import model47Image from "@/assets/model47.jpg";
+import model48Image from "@/assets/model48.jpg";
+import model49Image from "@/assets/model49.jpg";
+import model50Image from "@/assets/model50.jpg";
+import model51Image from "@/assets/model51.jpg";
+import model52Image from "@/assets/model52.jpg";
+import model53Image from "@/assets/model53.jpg";
+import model54Image from "@/assets/model54.jpg";
+import model55Image from "@/assets/model55.jpg";
+import model56Image from "@/assets/model56.jpg";
+import model57Image from "@/assets/model57.jpg";
+import model58Image from "@/assets/model58.jpg";
+import model59Image from "@/assets/model59.jpg";
+import model60Image from "@/assets/model60.jpg";
+import model61Image from "@/assets/model61.jpg";
+import model62Image from "@/assets/model62.jpg";
+import model63Image from "@/assets/model63.jpg";
+import model64Image from "@/assets/model64.jpg";
+import model65Image from "@/assets/model65.jpg";
+import model66Image from "@/assets/model66.jpg";
+import model67Image from "@/assets/model67.jpg";
+import model68Image from "@/assets/model68.jpg";
+import model69Image from "@/assets/model69.jpg";
+import model70Image from "@/assets/model70.jpg";
 
 // Model data - diverse portrait pool
 const models = [
@@ -85,6 +115,39 @@ const models = [
   { id: 38, name: "Julia", image: model38Image },
   { id: 39, name: "Maja", image: model39Image },
   { id: 40, name: "Kim", image: model40Image },
+  // Colombia
+  { id: 41, name: "Sofía", image: model41Image },
+  { id: 42, name: "Manuela", image: model42Image },
+  { id: 43, name: "Natalia", image: model43Image },
+  { id: 44, name: "Gabriela", image: model44Image },
+  { id: 45, name: "Paula", image: model45Image },
+  { id: 46, name: "Andrea", image: model46Image },
+  { id: 47, name: "Juliana", image: model47Image },
+  { id: 48, name: "Sara", image: model48Image },
+  { id: 49, name: "Laura", image: model49Image },
+  { id: 50, name: "Diana", image: model50Image },
+  // Venezuela
+  { id: 51, name: "Adriana", image: model51Image },
+  { id: 52, name: "Vanessa", image: model52Image },
+  { id: 53, name: "Génesis", image: model53Image },
+  { id: 54, name: "Mariángel", image: model54Image },
+  { id: 55, name: "Oriana", image: model55Image },
+  { id: 56, name: "Mariela", image: model56Image },
+  { id: 57, name: "Yuliana", image: model57Image },
+  { id: 58, name: "Antonella", image: model58Image },
+  { id: 59, name: "Fabiana", image: model59Image },
+  { id: 60, name: "Stefanía", image: model60Image },
+  // Slavic countries
+  { id: 61, name: "Anastasia", image: model61Image },
+  { id: 62, name: "Oksana", image: model62Image },
+  { id: 63, name: "Kinga", image: model63Image },
+  { id: 64, name: "Petra", image: model64Image },
+  { id: 65, name: "Milica", image: model65Image },
+  { id: 66, name: "Darya", image: model66Image },
+  { id: 67, name: "Ivana", image: model67Image },
+  { id: 68, name: "Zuzana", image: model68Image },
+  { id: 69, name: "Elena", image: model69Image },
+  { id: 70, name: "Maja", image: model70Image },
 ];
 
 // Sound effect utilities using Web Audio API
