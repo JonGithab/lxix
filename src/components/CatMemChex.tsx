@@ -263,8 +263,8 @@ const CatMemChex = () => {
           >
             <Heart className="w-8 h-8 text-primary fill-primary" />
           </motion.div>
-          <h1 className="text-4xl sm:text-5xl font-extrabold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-            CatMemChex
+          <h1 className="text-4xl sm:text-5xl font-extrabold holographic-text" style={{ fontFamily: "'Comic Sans MS', 'Chalkboard', 'Marker Felt', cursive" }}>
+            ReliabilityTest
           </h1>
           <motion.div
             animate={{ y: [0, -8, 0] }}
