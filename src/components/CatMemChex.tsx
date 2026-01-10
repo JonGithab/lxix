@@ -622,7 +622,7 @@ const CatMemChex = () => {
             </span>
           </motion.div>
         </div>
-        <p className="text-muted-foreground text-lg">Vote for your favorite models</p>
+        <p className="text-muted-foreground text-lg">Hit me up buttercup</p>
       </header>
 
       {/* Main Content */}
