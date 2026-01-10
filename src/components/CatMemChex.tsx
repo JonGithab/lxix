@@ -311,7 +311,7 @@ const CatMemChex = () => {
             <Heart className="w-8 h-8 text-primary fill-primary" />
           </motion.div>
         </div>
-        <p className="text-muted-foreground text-lg">Vote for your favorite furry friend!</p>
+        <p className="text-muted-foreground text-lg">Vote for your favorite models</p>
       </header>
 
       {/* Main Content */}
