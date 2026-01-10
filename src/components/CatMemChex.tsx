@@ -162,11 +162,21 @@ import model157Image from "@/assets/model157.jpg";
 import model158Image from "@/assets/model158.jpg";
 import model159Image from "@/assets/model159.jpg";
 import model160Image from "@/assets/model160.jpg";
+import model161Image from "@/assets/model161.jpg";
+import model162Image from "@/assets/model162.jpg";
+import model163Image from "@/assets/model163.jpg";
+import model164Image from "@/assets/model164.jpg";
+import model165Image from "@/assets/model165.jpg";
+import model166Image from "@/assets/model166.jpg";
+import model167Image from "@/assets/model167.jpg";
+import model168Image from "@/assets/model168.jpg";
+import model169Image from "@/assets/model169.jpg";
+import model170Image from "@/assets/model170.jpg";
 
 // Region types
-type Region = "All" | "Global" | "Philippines" | "Colombia" | "Venezuela" | "Slavic" | "Korea" | "USA" | "Brazil" | "India" | "Romania" | "Spain" | "Vietnam" | "Thailand" | "Iran";
+type Region = "All" | "Global" | "Philippines" | "Colombia" | "Venezuela" | "Slavic" | "Korea" | "USA" | "Brazil" | "India" | "Romania" | "Spain" | "Vietnam" | "Thailand" | "Iran" | "Japan";
 
-const regions: Region[] = ["All", "Global", "Philippines", "Colombia", "Venezuela", "Slavic", "Korea", "USA", "Brazil", "India", "Romania", "Spain", "Vietnam", "Thailand", "Iran"];
+const regions: Region[] = ["All", "Global", "Philippines", "Colombia", "Venezuela", "Slavic", "Korea", "USA", "Brazil", "India", "Romania", "Spain", "Vietnam", "Thailand", "Iran", "Japan"];
 
 // Model data - diverse portrait pool with regions
 const models = [
@@ -342,6 +352,17 @@ const models = [
   { id: 158, name: "Fatemeh", image: model158Image, region: "Iran" as Region },
   { id: 159, name: "Yasmin", image: model159Image, region: "Iran" as Region },
   { id: 160, name: "Darya", image: model160Image, region: "Iran" as Region },
+  // Japan
+  { id: 161, name: "Yuki", image: model161Image, region: "Japan" as Region },
+  { id: 162, name: "Sakura", image: model162Image, region: "Japan" as Region },
+  { id: 163, name: "Haruka", image: model163Image, region: "Japan" as Region },
+  { id: 164, name: "Aoi", image: model164Image, region: "Japan" as Region },
+  { id: 165, name: "Mio", image: model165Image, region: "Japan" as Region },
+  { id: 166, name: "Rina", image: model166Image, region: "Japan" as Region },
+  { id: 167, name: "Yui", image: model167Image, region: "Japan" as Region },
+  { id: 168, name: "Nanami", image: model168Image, region: "Japan" as Region },
+  { id: 169, name: "Hina", image: model169Image, region: "Japan" as Region },
+  { id: 170, name: "Mei", image: model170Image, region: "Japan" as Region },
 ];
 
 // Sound effect utilities using Web Audio API
