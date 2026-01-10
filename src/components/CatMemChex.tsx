@@ -376,10 +376,10 @@ const CatMemChex = () => {
           <motion.div
             animate={{ y: [0, -8, 0] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="relative"
+            className="relative flex items-center justify-center"
           >
             <Heart className="w-8 h-8 text-primary fill-primary" />
-            <span className="absolute -top-1 -right-1 w-5 h-5 bg-primary text-primary-foreground text-xs font-bold rounded-full flex items-center justify-center">
+            <span className="absolute inset-0 flex items-center justify-center text-primary-foreground text-xs font-bold">
               6
             </span>
           </motion.div>
