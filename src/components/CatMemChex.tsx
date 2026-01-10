@@ -132,11 +132,21 @@ import model127Image from "@/assets/model127.jpg";
 import model128Image from "@/assets/model128.jpg";
 import model129Image from "@/assets/model129.jpg";
 import model130Image from "@/assets/model130.jpg";
+import model131Image from "@/assets/model131.jpg";
+import model132Image from "@/assets/model132.jpg";
+import model133Image from "@/assets/model133.jpg";
+import model134Image from "@/assets/model134.jpg";
+import model135Image from "@/assets/model135.jpg";
+import model136Image from "@/assets/model136.jpg";
+import model137Image from "@/assets/model137.jpg";
+import model138Image from "@/assets/model138.jpg";
+import model139Image from "@/assets/model139.jpg";
+import model140Image from "@/assets/model140.jpg";
 
 // Region types
-type Region = "All" | "Global" | "Philippines" | "Colombia" | "Venezuela" | "Slavic" | "Korea" | "USA" | "Brazil" | "India" | "Romania" | "Spain";
+type Region = "All" | "Global" | "Philippines" | "Colombia" | "Venezuela" | "Slavic" | "Korea" | "USA" | "Brazil" | "India" | "Romania" | "Spain" | "Vietnam";
 
-const regions: Region[] = ["All", "Global", "Philippines", "Colombia", "Venezuela", "Slavic", "Korea", "USA", "Brazil", "India", "Romania", "Spain"];
+const regions: Region[] = ["All", "Global", "Philippines", "Colombia", "Venezuela", "Slavic", "Korea", "USA", "Brazil", "India", "Romania", "Spain", "Vietnam"];
 
 // Model data - diverse portrait pool with regions
 const models = [
@@ -279,6 +289,17 @@ const models = [
   { id: 128, name: "Claudia", image: model128Image, region: "Spain" as Region },
   { id: 129, name: "Elena", image: model129Image, region: "Spain" as Region },
   { id: 130, name: "Ines", image: model130Image, region: "Spain" as Region },
+  // Vietnam
+  { id: 131, name: "Linh", image: model131Image, region: "Vietnam" as Region },
+  { id: 132, name: "Ngoc", image: model132Image, region: "Vietnam" as Region },
+  { id: 133, name: "Thao", image: model133Image, region: "Vietnam" as Region },
+  { id: 134, name: "Huong", image: model134Image, region: "Vietnam" as Region },
+  { id: 135, name: "Mai", image: model135Image, region: "Vietnam" as Region },
+  { id: 136, name: "Lan", image: model136Image, region: "Vietnam" as Region },
+  { id: 137, name: "Trang", image: model137Image, region: "Vietnam" as Region },
+  { id: 138, name: "Yen", image: model138Image, region: "Vietnam" as Region },
+  { id: 139, name: "Hanh", image: model139Image, region: "Vietnam" as Region },
+  { id: 140, name: "Phuong", image: model140Image, region: "Vietnam" as Region },
 ];
 
 // Sound effect utilities using Web Audio API
