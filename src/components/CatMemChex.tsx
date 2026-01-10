@@ -324,21 +324,19 @@ const CatCard = ({ image, name, score, onHot, onNot, isAnimating, hearts, isExit
           variant="not"
           size="lg"
           onClick={onNot}
-          className="rounded-full px-6"
+          className="rounded-full w-14 h-14 p-0"
           disabled={isExiting}
         >
-          <X className="w-5 h-5" />
-          Push
+          <X className="w-6 h-6" />
         </Button>
         <Button
           variant="hot"
           size="lg"
           onClick={onHot}
-          className="rounded-full px-6"
+          className="rounded-full w-14 h-14 p-0"
           disabled={isExiting}
         >
-          <Flame className="w-5 h-5" />
-          Pull
+          <Flame className="w-6 h-6" />
         </Button>
       </div>
     </div>
