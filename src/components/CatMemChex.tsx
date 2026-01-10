@@ -172,11 +172,21 @@ import model167Image from "@/assets/model167.jpg";
 import model168Image from "@/assets/model168.jpg";
 import model169Image from "@/assets/model169.jpg";
 import model170Image from "@/assets/model170.jpg";
+import model171Image from "@/assets/model171.jpg";
+import model172Image from "@/assets/model172.jpg";
+import model173Image from "@/assets/model173.jpg";
+import model174Image from "@/assets/model174.jpg";
+import model175Image from "@/assets/model175.jpg";
+import model176Image from "@/assets/model176.jpg";
+import model177Image from "@/assets/model177.jpg";
+import model178Image from "@/assets/model178.jpg";
+import model179Image from "@/assets/model179.jpg";
+import model180Image from "@/assets/model180.jpg";
 
 // Region types
-type Region = "All" | "Global" | "Philippines" | "Colombia" | "Venezuela" | "Slavic" | "Korea" | "USA" | "Brazil" | "India" | "Romania" | "Spain" | "Vietnam" | "Thailand" | "Iran" | "Japan";
+type Region = "All" | "Global" | "Philippines" | "Colombia" | "Venezuela" | "Slavic" | "Korea" | "USA" | "Brazil" | "India" | "Romania" | "Spain" | "Vietnam" | "Thailand" | "Iran" | "Japan" | "Italy";
 
-const regions: Region[] = ["All", "Global", "Philippines", "Colombia", "Venezuela", "Slavic", "Korea", "USA", "Brazil", "India", "Romania", "Spain", "Vietnam", "Thailand", "Iran", "Japan"];
+const regions: Region[] = ["All", "Global", "Philippines", "Colombia", "Venezuela", "Slavic", "Korea", "USA", "Brazil", "India", "Romania", "Spain", "Vietnam", "Thailand", "Iran", "Japan", "Italy"];
 
 // Model data - diverse portrait pool with regions
 const models = [
@@ -363,6 +373,17 @@ const models = [
   { id: 168, name: "Nanami", image: model168Image, region: "Japan" as Region },
   { id: 169, name: "Hina", image: model169Image, region: "Japan" as Region },
   { id: 170, name: "Mei", image: model170Image, region: "Japan" as Region },
+  // Italy
+  { id: 171, name: "Giulia", image: model171Image, region: "Italy" as Region },
+  { id: 172, name: "Francesca", image: model172Image, region: "Italy" as Region },
+  { id: 173, name: "Chiara", image: model173Image, region: "Italy" as Region },
+  { id: 174, name: "Valentina", image: model174Image, region: "Italy" as Region },
+  { id: 175, name: "Alessia", image: model175Image, region: "Italy" as Region },
+  { id: 176, name: "Martina", image: model176Image, region: "Italy" as Region },
+  { id: 177, name: "Sara", image: model177Image, region: "Italy" as Region },
+  { id: 178, name: "Giorgia", image: model178Image, region: "Italy" as Region },
+  { id: 179, name: "Elisa", image: model179Image, region: "Italy" as Region },
+  { id: 180, name: "Federica", image: model180Image, region: "Italy" as Region },
 ];
 
 // Sound effect utilities using Web Audio API
