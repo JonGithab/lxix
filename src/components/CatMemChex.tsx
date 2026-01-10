@@ -376,8 +376,12 @@ const CatMemChex = () => {
           <motion.div
             animate={{ y: [0, -8, 0] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            className="relative"
           >
             <Heart className="w-8 h-8 text-primary fill-primary" />
+            <span className="absolute -top-1 -right-1 w-5 h-5 bg-primary text-primary-foreground text-xs font-bold rounded-full flex items-center justify-center">
+              6
+            </span>
           </motion.div>
           <h1 className="text-4xl sm:text-5xl font-extrabold holographic-text" style={{ fontFamily: "'Comic Sans MS', 'Chalkboard', 'Marker Felt', cursive" }}>
             ReliabilityTest
