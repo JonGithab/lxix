@@ -727,7 +727,7 @@ const CatMemChex = () => {
             </span>
           </motion.div>
         </div>
-        <p className="text-muted-foreground text-lg">Hit me up buttercup</p>
+        <p className="text-muted-foreground text-lg">hit me up</p>
         
         {/* Region Filter */}
         <div className="relative mt-4">
