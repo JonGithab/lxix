@@ -1,8 +1,17 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Heart, Flame, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { motion, AnimatePresence } from "framer-motion";
 import cat1Image from "@/assets/cat1.jpg";
 import cat2Image from "@/assets/cat2.jpg";
+
+interface FloatingHeart {
+  id: number;
+  x: number;
+  y: number;
+  scale: number;
+  rotation: number;
+}
 
 interface CatCardProps {
   image: string;
@@ -11,15 +20,16 @@ interface CatCardProps {
   onHot: () => void;
   onNot: () => void;
   isAnimating: boolean;
+  hearts: FloatingHeart[];
 }
 
-const CatCard = ({ image, name, score, onHot, onNot, isAnimating }: CatCardProps) => {
+const CatCard = ({ image, name, score, onHot, onNot, isAnimating, hearts }: CatCardProps) => {
   return (
     <div className="group relative flex flex-col items-center">
       {/* Card */}
-      <div className="relative overflow-hidden rounded-3xl glass shadow-card transition-all duration-500 hover:shadow-card-hover hover:-translate-y-2">
+      <div className="relative overflow-visible rounded-3xl glass shadow-card transition-all duration-500 hover:shadow-card-hover hover:-translate-y-2">
         {/* Image Container */}
-        <div className="relative w-64 h-80 sm:w-72 sm:h-96 overflow-hidden">
+        <div className="relative w-64 h-80 sm:w-72 sm:h-96 overflow-hidden rounded-3xl">
           <img
             src={image}
             alt={name}
@@ -30,16 +40,56 @@ const CatCard = ({ image, name, score, onHot, onNot, isAnimating }: CatCardProps
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
           
           {/* Score Badge */}
-          <div className={`absolute top-4 right-4 flex items-center gap-1.5 px-3 py-1.5 rounded-full glass shadow-lg ${isAnimating ? 'animate-scale-up' : ''}`}>
+          <motion.div 
+            className="absolute top-4 right-4 flex items-center gap-1.5 px-3 py-1.5 rounded-full glass shadow-lg"
+            animate={isAnimating ? { scale: [1, 1.2, 1] } : {}}
+            transition={{ duration: 0.3 }}
+          >
             <Heart className="w-4 h-4 text-primary fill-primary" />
             <span className="font-bold text-foreground">{score}</span>
-          </div>
+          </motion.div>
           
           {/* Name */}
           <div className="absolute bottom-4 left-4 right-4">
             <h3 className="text-xl font-bold text-white drop-shadow-lg">{name}</h3>
           </div>
         </div>
+        
+        {/* Floating Hearts */}
+        <AnimatePresence>
+          {hearts.map((heart) => (
+            <motion.div
+              key={heart.id}
+              className="absolute pointer-events-none"
+              style={{ 
+                left: `${heart.x}%`, 
+                top: `${heart.y}%`,
+              }}
+              initial={{ 
+                opacity: 1, 
+                scale: 0, 
+                y: 0,
+                rotate: 0,
+              }}
+              animate={{ 
+                opacity: [1, 1, 0], 
+                scale: [0, heart.scale, heart.scale * 0.8],
+                y: -150,
+                rotate: heart.rotation,
+              }}
+              exit={{ opacity: 0 }}
+              transition={{ 
+                duration: 1.2,
+                ease: "easeOut",
+              }}
+            >
+              <Heart 
+                className="w-8 h-8 text-primary fill-primary drop-shadow-lg" 
+                style={{ filter: 'drop-shadow(0 0 8px hsl(340, 82%, 62%))' }}
+              />
+            </motion.div>
+          ))}
+        </AnimatePresence>
       </div>
       
       {/* Action Buttons */}
@@ -76,33 +126,70 @@ const CatMemChex = () => {
     cat2: false,
   });
 
+  const [hearts, setHearts] = useState<{ cat1: FloatingHeart[]; cat2: FloatingHeart[] }>({
+    cat1: [],
+    cat2: [],
+  });
+
+  const [heartId, setHeartId] = useState(0);
+
   useEffect(() => {
     localStorage.setItem("catmemchex-scores", JSON.stringify(scores));
   }, [scores]);
 
+  const spawnHearts = useCallback((cat: "cat1" | "cat2") => {
+    const newHearts: FloatingHeart[] = Array.from({ length: 6 }, (_, i) => ({
+      id: heartId + i,
+      x: 20 + Math.random() * 60,
+      y: 30 + Math.random() * 40,
+      scale: 0.6 + Math.random() * 0.8,
+      rotation: -30 + Math.random() * 60,
+    }));
+
+    setHeartId((prev) => prev + 6);
+    setHearts((prev) => ({ ...prev, [cat]: [...prev[cat], ...newHearts] }));
+
+    // Remove hearts after animation
+    setTimeout(() => {
+      setHearts((prev) => ({
+        ...prev,
+        [cat]: prev[cat].filter((h) => !newHearts.find((nh) => nh.id === h.id)),
+      }));
+    }, 1500);
+  }, [heartId]);
+
   const handleHot = (cat: "cat1" | "cat2") => {
     setScores((prev) => ({ ...prev, [cat]: prev[cat] + 1 }));
     setAnimating((prev) => ({ ...prev, [cat]: true }));
+    spawnHearts(cat);
     setTimeout(() => setAnimating((prev) => ({ ...prev, [cat]: false })), 300);
   };
 
   const handleNot = (cat: "cat1" | "cat2") => {
-    // Not action - could decrement or just do nothing
-    // For now, we'll show a subtle animation
     setAnimating((prev) => ({ ...prev, [cat]: true }));
     setTimeout(() => setAnimating((prev) => ({ ...prev, [cat]: false })), 300);
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="min-h-screen bg-background flex flex-col overflow-hidden">
       {/* Header */}
       <header className="py-8 px-4 text-center">
         <div className="flex items-center justify-center gap-3 mb-2">
-          <Heart className="w-8 h-8 text-primary fill-primary animate-float" />
+          <motion.div
+            animate={{ y: [0, -8, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <Heart className="w-8 h-8 text-primary fill-primary" />
+          </motion.div>
           <h1 className="text-4xl sm:text-5xl font-extrabold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
             CatMemChex
           </h1>
-          <Heart className="w-8 h-8 text-primary fill-primary animate-float" style={{ animationDelay: "0.5s" }} />
+          <motion.div
+            animate={{ y: [0, -8, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+          >
+            <Heart className="w-8 h-8 text-primary fill-primary" />
+          </motion.div>
         </div>
         <p className="text-muted-foreground text-lg">Vote for your favorite furry friend!</p>
       </header>
@@ -117,12 +204,17 @@ const CatMemChex = () => {
             onHot={() => handleHot("cat1")}
             onNot={() => handleNot("cat1")}
             isAnimating={animating.cat1}
+            hearts={hearts.cat1}
           />
           
           {/* VS Badge */}
-          <div className="hidden sm:flex items-center justify-center w-16 h-16 rounded-full gradient-primary shadow-glow">
+          <motion.div 
+            className="hidden sm:flex items-center justify-center w-16 h-16 rounded-full gradient-primary shadow-glow"
+            animate={{ scale: [1, 1.05, 1] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          >
             <span className="text-xl font-extrabold text-white">VS</span>
-          </div>
+          </motion.div>
           
           <CatCard
             image={cat2Image}
@@ -131,6 +223,7 @@ const CatMemChex = () => {
             onHot={() => handleHot("cat2")}
             onNot={() => handleNot("cat2")}
             isAnimating={animating.cat2}
+            hearts={hearts.cat2}
           />
         </div>
       </main>
