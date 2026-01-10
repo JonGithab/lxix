@@ -92,11 +92,21 @@ import model87Image from "@/assets/model87.jpg";
 import model88Image from "@/assets/model88.jpg";
 import model89Image from "@/assets/model89.jpg";
 import model90Image from "@/assets/model90.jpg";
+import model91Image from "@/assets/model91.jpg";
+import model92Image from "@/assets/model92.jpg";
+import model93Image from "@/assets/model93.jpg";
+import model94Image from "@/assets/model94.jpg";
+import model95Image from "@/assets/model95.jpg";
+import model96Image from "@/assets/model96.jpg";
+import model97Image from "@/assets/model97.jpg";
+import model98Image from "@/assets/model98.jpg";
+import model99Image from "@/assets/model99.jpg";
+import model100Image from "@/assets/model100.jpg";
 
 // Region types
-type Region = "All" | "Global" | "Philippines" | "Colombia" | "Venezuela" | "Slavic" | "Korea" | "USA";
+type Region = "All" | "Global" | "Philippines" | "Colombia" | "Venezuela" | "Slavic" | "Korea" | "USA" | "Brazil";
 
-const regions: Region[] = ["All", "Global", "Philippines", "Colombia", "Venezuela", "Slavic", "Korea", "USA"];
+const regions: Region[] = ["All", "Global", "Philippines", "Colombia", "Venezuela", "Slavic", "Korea", "USA", "Brazil"];
 
 // Model data - diverse portrait pool with regions
 const models = [
@@ -195,6 +205,17 @@ const models = [
   { id: 88, name: "Riley", image: model88Image, region: "USA" as Region },
   { id: 89, name: "Savannah", image: model89Image, region: "USA" as Region },
   { id: 90, name: "Megan", image: model90Image, region: "USA" as Region },
+  // Brazil
+  { id: 91, name: "Fernanda", image: model91Image, region: "Brazil" as Region },
+  { id: 92, name: "Tainá", image: model92Image, region: "Brazil" as Region },
+  { id: 93, name: "Bianca", image: model93Image, region: "Brazil" as Region },
+  { id: 94, name: "Raquel", image: model94Image, region: "Brazil" as Region },
+  { id: 95, name: "Letícia", image: model95Image, region: "Brazil" as Region },
+  { id: 96, name: "Larissa", image: model96Image, region: "Brazil" as Region },
+  { id: 97, name: "Beatriz", image: model97Image, region: "Brazil" as Region },
+  { id: 98, name: "Giovanna", image: model98Image, region: "Brazil" as Region },
+  { id: 99, name: "Yumi", image: model99Image, region: "Brazil" as Region },
+  { id: 100, name: "Gisele", image: model100Image, region: "Brazil" as Region },
 ];
 
 // Sound effect utilities using Web Audio API
