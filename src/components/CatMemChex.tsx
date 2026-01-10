@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from "react";
-import { Heart, Flame, X } from "lucide-react";
+import { Heart, Flame, X, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import model1Image from "@/assets/model1.jpg";
@@ -73,81 +73,86 @@ import model68Image from "@/assets/model68.jpg";
 import model69Image from "@/assets/model69.jpg";
 import model70Image from "@/assets/model70.jpg";
 
-// Model data - diverse portrait pool
+// Region types
+type Region = "All" | "Global" | "Philippines" | "Colombia" | "Venezuela" | "Slavic";
+
+const regions: Region[] = ["All", "Global", "Philippines", "Colombia", "Venezuela", "Slavic"];
+
+// Model data - diverse portrait pool with regions
 const models = [
-  { id: 1, name: "Ava", image: model1Image },
-  { id: 2, name: "Mei", image: model2Image },
-  { id: 3, name: "Sofia", image: model3Image },
-  { id: 4, name: "Emma", image: model4Image },
-  { id: 5, name: "Layla", image: model5Image },
-  { id: 6, name: "Priya", image: model6Image },
-  { id: 7, name: "Ruby", image: model7Image },
-  { id: 8, name: "Amara", image: model8Image },
-  { id: 9, name: "Luna", image: model9Image },
-  { id: 10, name: "Yuki", image: model10Image },
-  { id: 11, name: "Hana", image: model11Image },
-  { id: 12, name: "Zara", image: model12Image },
-  { id: 13, name: "Giulia", image: model13Image },
-  { id: 14, name: "Natasha", image: model14Image },
-  { id: 15, name: "Maria", image: model15Image },
-  { id: 16, name: "Astrid", image: model16Image },
-  { id: 17, name: "Suki", image: model17Image },
-  { id: 18, name: "Adaeze", image: model18Image },
-  { id: 19, name: "Valentina", image: model19Image },
-  { id: 20, name: "Sienna", image: model20Image },
-  { id: 21, name: "Ximena", image: model21Image },
-  { id: 22, name: "Camila", image: model22Image },
-  { id: 23, name: "Isabella", image: model23Image },
-  { id: 24, name: "Daniela", image: model24Image },
-  { id: 25, name: "Alejandra", image: model25Image },
-  { id: 26, name: "Yasmín", image: model26Image },
-  { id: 27, name: "Luciana", image: model27Image },
-  { id: 28, name: "Catalina", image: model28Image },
-  { id: 29, name: "Mariana", image: model29Image },
-  { id: 30, name: "Carolina", image: model30Image },
-  { id: 31, name: "Althea", image: model31Image },
-  { id: 32, name: "Jasmine", image: model32Image },
-  { id: 33, name: "Bea", image: model33Image },
-  { id: 34, name: "Katrina", image: model34Image },
-  { id: 35, name: "Angel", image: model35Image },
-  { id: 36, name: "Liza", image: model36Image },
-  { id: 37, name: "Nadine", image: model37Image },
-  { id: 38, name: "Julia", image: model38Image },
-  { id: 39, name: "Maja", image: model39Image },
-  { id: 40, name: "Kim", image: model40Image },
+  { id: 1, name: "Ava", image: model1Image, region: "Global" as Region },
+  { id: 2, name: "Mei", image: model2Image, region: "Global" as Region },
+  { id: 3, name: "Sofia", image: model3Image, region: "Global" as Region },
+  { id: 4, name: "Emma", image: model4Image, region: "Global" as Region },
+  { id: 5, name: "Layla", image: model5Image, region: "Global" as Region },
+  { id: 6, name: "Priya", image: model6Image, region: "Global" as Region },
+  { id: 7, name: "Ruby", image: model7Image, region: "Global" as Region },
+  { id: 8, name: "Amara", image: model8Image, region: "Global" as Region },
+  { id: 9, name: "Luna", image: model9Image, region: "Global" as Region },
+  { id: 10, name: "Yuki", image: model10Image, region: "Global" as Region },
+  { id: 11, name: "Hana", image: model11Image, region: "Global" as Region },
+  { id: 12, name: "Zara", image: model12Image, region: "Global" as Region },
+  { id: 13, name: "Giulia", image: model13Image, region: "Global" as Region },
+  { id: 14, name: "Natasha", image: model14Image, region: "Global" as Region },
+  { id: 15, name: "Maria", image: model15Image, region: "Global" as Region },
+  { id: 16, name: "Astrid", image: model16Image, region: "Global" as Region },
+  { id: 17, name: "Suki", image: model17Image, region: "Global" as Region },
+  { id: 18, name: "Adaeze", image: model18Image, region: "Global" as Region },
+  { id: 19, name: "Valentina", image: model19Image, region: "Global" as Region },
+  { id: 20, name: "Sienna", image: model20Image, region: "Global" as Region },
+  { id: 21, name: "Ximena", image: model21Image, region: "Global" as Region },
+  { id: 22, name: "Camila", image: model22Image, region: "Global" as Region },
+  { id: 23, name: "Isabella", image: model23Image, region: "Global" as Region },
+  { id: 24, name: "Daniela", image: model24Image, region: "Global" as Region },
+  { id: 25, name: "Alejandra", image: model25Image, region: "Global" as Region },
+  { id: 26, name: "Yasmín", image: model26Image, region: "Global" as Region },
+  { id: 27, name: "Luciana", image: model27Image, region: "Global" as Region },
+  { id: 28, name: "Catalina", image: model28Image, region: "Global" as Region },
+  { id: 29, name: "Mariana", image: model29Image, region: "Global" as Region },
+  { id: 30, name: "Carolina", image: model30Image, region: "Global" as Region },
+  // Philippines
+  { id: 31, name: "Althea", image: model31Image, region: "Philippines" as Region },
+  { id: 32, name: "Jasmine", image: model32Image, region: "Philippines" as Region },
+  { id: 33, name: "Bea", image: model33Image, region: "Philippines" as Region },
+  { id: 34, name: "Katrina", image: model34Image, region: "Philippines" as Region },
+  { id: 35, name: "Angel", image: model35Image, region: "Philippines" as Region },
+  { id: 36, name: "Liza", image: model36Image, region: "Philippines" as Region },
+  { id: 37, name: "Nadine", image: model37Image, region: "Philippines" as Region },
+  { id: 38, name: "Julia", image: model38Image, region: "Philippines" as Region },
+  { id: 39, name: "Maja", image: model39Image, region: "Philippines" as Region },
+  { id: 40, name: "Kim", image: model40Image, region: "Philippines" as Region },
   // Colombia
-  { id: 41, name: "Sofía", image: model41Image },
-  { id: 42, name: "Manuela", image: model42Image },
-  { id: 43, name: "Natalia", image: model43Image },
-  { id: 44, name: "Gabriela", image: model44Image },
-  { id: 45, name: "Paula", image: model45Image },
-  { id: 46, name: "Andrea", image: model46Image },
-  { id: 47, name: "Juliana", image: model47Image },
-  { id: 48, name: "Sara", image: model48Image },
-  { id: 49, name: "Laura", image: model49Image },
-  { id: 50, name: "Diana", image: model50Image },
+  { id: 41, name: "Sofía", image: model41Image, region: "Colombia" as Region },
+  { id: 42, name: "Manuela", image: model42Image, region: "Colombia" as Region },
+  { id: 43, name: "Natalia", image: model43Image, region: "Colombia" as Region },
+  { id: 44, name: "Gabriela", image: model44Image, region: "Colombia" as Region },
+  { id: 45, name: "Paula", image: model45Image, region: "Colombia" as Region },
+  { id: 46, name: "Andrea", image: model46Image, region: "Colombia" as Region },
+  { id: 47, name: "Juliana", image: model47Image, region: "Colombia" as Region },
+  { id: 48, name: "Sara", image: model48Image, region: "Colombia" as Region },
+  { id: 49, name: "Laura", image: model49Image, region: "Colombia" as Region },
+  { id: 50, name: "Diana", image: model50Image, region: "Colombia" as Region },
   // Venezuela
-  { id: 51, name: "Adriana", image: model51Image },
-  
-  { id: 53, name: "Génesis", image: model53Image },
-  { id: 54, name: "Mariángel", image: model54Image },
-  { id: 55, name: "Oriana", image: model55Image },
-  { id: 56, name: "Mariela", image: model56Image },
-  { id: 57, name: "Yuliana", image: model57Image },
-  { id: 58, name: "Antonella", image: model58Image },
-  { id: 59, name: "Fabiana", image: model59Image },
-  { id: 60, name: "Stefanía", image: model60Image },
+  { id: 51, name: "Adriana", image: model51Image, region: "Venezuela" as Region },
+  { id: 53, name: "Génesis", image: model53Image, region: "Venezuela" as Region },
+  { id: 54, name: "Mariángel", image: model54Image, region: "Venezuela" as Region },
+  { id: 55, name: "Oriana", image: model55Image, region: "Venezuela" as Region },
+  { id: 56, name: "Mariela", image: model56Image, region: "Venezuela" as Region },
+  { id: 57, name: "Yuliana", image: model57Image, region: "Venezuela" as Region },
+  { id: 58, name: "Antonella", image: model58Image, region: "Venezuela" as Region },
+  { id: 59, name: "Fabiana", image: model59Image, region: "Venezuela" as Region },
+  { id: 60, name: "Stefanía", image: model60Image, region: "Venezuela" as Region },
   // Slavic countries
-  { id: 61, name: "Anastasia", image: model61Image },
-  { id: 62, name: "Oksana", image: model62Image },
-  { id: 63, name: "Kinga", image: model63Image },
-  { id: 64, name: "Petra", image: model64Image },
-  { id: 65, name: "Milica", image: model65Image },
-  { id: 66, name: "Darya", image: model66Image },
-  { id: 67, name: "Ivana", image: model67Image },
-  { id: 68, name: "Zuzana", image: model68Image },
-  { id: 69, name: "Elena", image: model69Image },
-  { id: 70, name: "Maja", image: model70Image },
+  { id: 61, name: "Anastasia", image: model61Image, region: "Slavic" as Region },
+  { id: 62, name: "Oksana", image: model62Image, region: "Slavic" as Region },
+  { id: 63, name: "Kinga", image: model63Image, region: "Slavic" as Region },
+  { id: 64, name: "Petra", image: model64Image, region: "Slavic" as Region },
+  { id: 65, name: "Milica", image: model65Image, region: "Slavic" as Region },
+  { id: 66, name: "Darya", image: model66Image, region: "Slavic" as Region },
+  { id: 67, name: "Ivana", image: model67Image, region: "Slavic" as Region },
+  { id: 68, name: "Zuzana", image: model68Image, region: "Slavic" as Region },
+  { id: 69, name: "Elena", image: model69Image, region: "Slavic" as Region },
+  { id: 70, name: "Maja", image: model70Image, region: "Slavic" as Region },
 ];
 
 // Sound effect utilities using Web Audio API
@@ -438,6 +443,13 @@ const CatCard = ({ image, name, score, onHot, onNot, isAnimating, hearts, isExit
 };
 
 const CatMemChex = () => {
+  const [selectedRegion, setSelectedRegion] = useState<Region>("All");
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  
+  const filteredModels = selectedRegion === "All" 
+    ? models 
+    : models.filter(m => m.region === selectedRegion);
+
   const [currentModels, setCurrentModels] = useState<{ card1: number; card2: number }>({
     card1: 0,
     card2: 1,
@@ -485,11 +497,20 @@ const CatMemChex = () => {
     localStorage.setItem("catmemchex-scores-v2", JSON.stringify(scores));
   }, [scores]);
 
+  // Reset cards when filter changes
+  useEffect(() => {
+    if (filteredModels.length >= 2) {
+      setCurrentModels({ card1: 0, card2: 1 });
+    } else if (filteredModels.length === 1) {
+      setCurrentModels({ card1: 0, card2: 0 });
+    }
+  }, [selectedRegion, filteredModels.length]);
+
   const getNextModelIndex = (currentIndex: number, otherCardIndex: number) => {
-    let nextIndex = (currentIndex + 1) % models.length;
+    let nextIndex = (currentIndex + 1) % filteredModels.length;
     // Avoid showing the same model on both cards
     if (nextIndex === otherCardIndex) {
-      nextIndex = (nextIndex + 1) % models.length;
+      nextIndex = (nextIndex + 1) % filteredModels.length;
     }
     return nextIndex;
   };
@@ -552,8 +573,8 @@ const CatMemChex = () => {
     }, 400);
   };
 
-  const card1Model = models[currentModels.card1];
-  const card2Model = models[currentModels.card2];
+  const card1Model = filteredModels[currentModels.card1];
+  const card2Model = filteredModels[currentModels.card2];
 
   return (
     <div className="min-h-screen bg-background flex flex-col overflow-hidden">
@@ -623,6 +644,38 @@ const CatMemChex = () => {
           </motion.div>
         </div>
         <p className="text-muted-foreground text-lg">Hit me up buttercup</p>
+        
+        {/* Region Filter */}
+        <div className="relative mt-4">
+          <button
+            onClick={() => setIsFilterOpen(!isFilterOpen)}
+            className="flex items-center gap-2 px-4 py-2 rounded-full bg-card border border-border hover:bg-accent transition-colors"
+          >
+            <span className="text-sm font-medium text-foreground">
+              {selectedRegion === "All" ? "All Regions" : selectedRegion}
+            </span>
+            <ChevronDown className={`w-4 h-4 text-muted-foreground transition-transform ${isFilterOpen ? 'rotate-180' : ''}`} />
+          </button>
+          
+          {isFilterOpen && (
+            <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 py-2 bg-card border border-border rounded-xl shadow-lg z-50 min-w-[160px]">
+              {regions.map((region) => (
+                <button
+                  key={region}
+                  onClick={() => {
+                    setSelectedRegion(region);
+                    setIsFilterOpen(false);
+                  }}
+                  className={`w-full px-4 py-2 text-left text-sm hover:bg-accent transition-colors ${
+                    selectedRegion === region ? 'text-primary font-medium' : 'text-foreground'
+                  }`}
+                >
+                  {region === "All" ? "All Regions" : region}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
       </header>
 
       {/* Main Content */}
