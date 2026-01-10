@@ -1,16 +1,9 @@
-import { useState, useEffect, useCallback, useMemo } from "react";
-import { Heart, Flame, X, Trophy, Crown, Medal } from "lucide-react";
+import { useState, useEffect, useCallback } from "react";
+import { Heart, Flame, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import cat1Image from "@/assets/cat1.jpg";
 import cat2Image from "@/assets/cat2.jpg";
-
-interface CatData {
-  id: string;
-  name: string;
-  image: string;
-  score: number;
-}
 
 interface FloatingHeart {
   id: number;
@@ -119,111 +112,6 @@ const CatCard = ({ image, name, score, onHot, onNot, isAnimating, hearts }: CatC
         </Button>
       </div>
     </div>
-  );
-};
-
-interface LeaderboardProps {
-  cats: CatData[];
-}
-
-const Leaderboard = ({ cats }: LeaderboardProps) => {
-  const sortedCats = useMemo(() => 
-    [...cats].sort((a, b) => b.score - a.score),
-    [cats]
-  );
-
-  const getRankIcon = (rank: number) => {
-    switch (rank) {
-      case 0:
-        return <Crown className="w-5 h-5 text-amber-500" />;
-      case 1:
-        return <Medal className="w-5 h-5 text-slate-400" />;
-      default:
-        return <Medal className="w-5 h-5 text-amber-700" />;
-    }
-  };
-
-  const getRankBg = (rank: number) => {
-    switch (rank) {
-      case 0:
-        return "bg-gradient-to-r from-amber-100 to-amber-50 border-amber-200";
-      case 1:
-        return "bg-gradient-to-r from-slate-100 to-slate-50 border-slate-200";
-      default:
-        return "bg-gradient-to-r from-amber-50 to-orange-50 border-amber-100";
-    }
-  };
-
-  return (
-    <motion.div 
-      className="w-full max-w-md mx-auto mt-8 px-4"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.3 }}
-    >
-      <div className="glass rounded-2xl p-6 shadow-card">
-        <div className="flex items-center justify-center gap-2 mb-6">
-          <Trophy className="w-6 h-6 text-primary" />
-          <h2 className="text-xl font-bold text-foreground">Leaderboard</h2>
-        </div>
-        
-        <div className="space-y-3">
-          {sortedCats.map((cat, index) => (
-            <motion.div
-              key={cat.id}
-              className={`flex items-center gap-4 p-3 rounded-xl border ${getRankBg(index)} transition-all duration-300 hover:scale-[1.02]`}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.1 * index }}
-              layout
-            >
-              {/* Rank */}
-              <div className="flex items-center justify-center w-8 h-8">
-                {getRankIcon(index)}
-              </div>
-              
-              {/* Cat Image */}
-              <div className="w-12 h-12 rounded-full overflow-hidden ring-2 ring-primary/20 shadow-md">
-                <img 
-                  src={cat.image} 
-                  alt={cat.name}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              
-              {/* Cat Info */}
-              <div className="flex-1">
-                <h3 className="font-bold text-foreground">{cat.name}</h3>
-                <p className="text-sm text-muted-foreground">
-                  {index === 0 ? "👑 Top Cat!" : index === 1 ? "Almost there!" : "Keep voting!"}
-                </p>
-              </div>
-              
-              {/* Score */}
-              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10">
-                <Heart className="w-4 h-4 text-primary fill-primary" />
-                <motion.span 
-                  className="font-bold text-primary"
-                  key={cat.score}
-                  initial={{ scale: 1.3 }}
-                  animate={{ scale: 1 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  {cat.score}
-                </motion.span>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-        
-        {/* Total Votes */}
-        <div className="mt-6 pt-4 border-t border-border text-center">
-          <p className="text-sm text-muted-foreground">
-            Total votes: <span className="font-bold text-foreground">{sortedCats.reduce((sum, cat) => sum + cat.score, 0)}</span>
-          </p>
-        </div>
-      </div>
-    </motion.div>
   );
 };
 
@@ -338,14 +226,6 @@ const CatMemChex = () => {
             hearts={hearts.cat2}
           />
         </div>
-
-        {/* Leaderboard */}
-        <Leaderboard 
-          cats={[
-            { id: "cat1", name: "Ginger", image: cat1Image, score: scores.cat1 },
-            { id: "cat2", name: "Shadow", image: cat2Image, score: scores.cat2 },
-          ]} 
-        />
       </main>
 
       {/* Footer */}
