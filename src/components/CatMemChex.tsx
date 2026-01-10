@@ -128,7 +128,7 @@ const models = [
   { id: 50, name: "Diana", image: model50Image },
   // Venezuela
   { id: 51, name: "Adriana", image: model51Image },
-  { id: 52, name: "Vanessa", image: model52Image },
+  
   { id: 53, name: "Génesis", image: model53Image },
   { id: 54, name: "Mariángel", image: model54Image },
   { id: 55, name: "Oriana", image: model55Image },
