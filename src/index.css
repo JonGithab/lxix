@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Nunito:wght@400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Monoton&family=Nunito:wght@400;600;700;800&display=swap');
 
 @layer base {
   :root {
@@ -170,7 +170,7 @@
 }
 
 .splash-title {
-  font-family: 'Bungee Shade', cursive;
+  font-family: 'Monoton', cursive;
   background: linear-gradient(
     90deg,
     hsl(340, 100%, 65%) 0%,
@@ -185,16 +185,32 @@
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  animation: holographic-splash 4s linear infinite;
-  filter: drop-shadow(0 0 8px hsl(340 100% 65% / 0.6)) 
-          drop-shadow(0 2px 4px hsl(280 100% 70% / 0.4))
-          drop-shadow(0 0 20px hsl(200 100% 65% / 0.3));
-  letter-spacing: 2px;
+  animation: holographic-splash 4s linear infinite, neon-flicker 3s ease-in-out infinite;
+  filter: drop-shadow(0 0 5px hsl(340 100% 65% / 0.8)) 
+          drop-shadow(0 0 10px hsl(340 100% 65% / 0.6))
+          drop-shadow(0 0 20px hsl(300 100% 70% / 0.5))
+          drop-shadow(0 0 40px hsl(280 100% 70% / 0.4));
+  letter-spacing: 4px;
 }
 
 @keyframes holographic-splash {
   0% { background-position: 0% 50%; }
   100% { background-position: 300% 50%; }
+}
+
+@keyframes neon-flicker {
+  0%, 100% {
+    filter: drop-shadow(0 0 5px hsl(340 100% 65% / 0.8)) 
+            drop-shadow(0 0 10px hsl(340 100% 65% / 0.6))
+            drop-shadow(0 0 20px hsl(300 100% 70% / 0.5))
+            drop-shadow(0 0 40px hsl(280 100% 70% / 0.4));
+  }
+  50% {
+    filter: drop-shadow(0 0 8px hsl(340 100% 70% / 1)) 
+            drop-shadow(0 0 15px hsl(340 100% 65% / 0.8))
+            drop-shadow(0 0 30px hsl(300 100% 70% / 0.7))
+            drop-shadow(0 0 60px hsl(280 100% 70% / 0.5));
+  }
 }
 
 @keyframes sparkle {
