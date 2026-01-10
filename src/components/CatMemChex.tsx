@@ -5,15 +5,20 @@ import { motion, AnimatePresence } from "framer-motion";
 import cat1Image from "@/assets/cat1.jpg";
 import cat2Image from "@/assets/cat2.jpg";
 
+// Model data - can be extended with more models
+const models = [
+  { id: 1, name: "Ginger", image: cat1Image },
+  { id: 2, name: "Shadow", image: cat2Image },
+];
+
 // Sound effect utilities using Web Audio API
 const createAudioContext = () => {
   return new (window.AudioContext || (window as any).webkitAudioContext)();
 };
 
 const playHotSound = (audioContext: AudioContext) => {
-  // Sexy rising arpeggio with warmth
   const now = audioContext.currentTime;
-  const notes = [440, 554, 659, 880]; // A4, C#5, E5, A5 - major chord arpeggio
+  const notes = [440, 554, 659, 880];
   
   notes.forEach((freq, i) => {
     const osc = audioContext.createOscillator();
@@ -39,7 +44,6 @@ const playHotSound = (audioContext: AudioContext) => {
     osc.stop(startTime + 0.5);
   });
   
-  // Add a soft shimmer
   const shimmer = audioContext.createOscillator();
   const shimmerGain = audioContext.createGain();
   shimmer.type = "triangle";
@@ -54,7 +58,6 @@ const playHotSound = (audioContext: AudioContext) => {
 };
 
 const playNotSound = (audioContext: AudioContext) => {
-  // Soft descending womp
   const now = audioContext.currentTime;
   const osc = audioContext.createOscillator();
   const gain = audioContext.createGain();
@@ -89,76 +92,92 @@ interface CatCardProps {
   onNot: () => void;
   isAnimating: boolean;
   hearts: FloatingHeart[];
+  isExiting: boolean;
+  exitDirection: "left" | "right" | null;
 }
 
-const CatCard = ({ image, name, score, onHot, onNot, isAnimating, hearts }: CatCardProps) => {
+const CatCard = ({ image, name, score, onHot, onNot, isAnimating, hearts, isExiting, exitDirection }: CatCardProps) => {
   return (
     <div className="group relative flex flex-col items-center">
       {/* Card */}
-      <div className="relative overflow-visible rounded-3xl glass shadow-card transition-all duration-500 hover:shadow-card-hover hover:-translate-y-2">
-        {/* Image Container */}
-        <div className="relative w-64 h-80 sm:w-72 sm:h-96 overflow-hidden rounded-3xl">
-          <img
-            src={image}
-            alt={name}
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-          />
-          
-          {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-          
-          {/* Score Badge */}
-          <motion.div 
-            className="absolute top-4 right-4 flex items-center gap-1.5 px-3 py-1.5 rounded-full glass shadow-lg"
-            animate={isAnimating ? { scale: [1, 1.2, 1] } : {}}
-            transition={{ duration: 0.3 }}
-          >
-            <Heart className="w-4 h-4 text-primary fill-primary" />
-            <span className="font-bold text-foreground">{score}</span>
-          </motion.div>
-          
-          {/* Name */}
-          <div className="absolute bottom-4 left-4 right-4">
-            <h3 className="text-xl font-bold text-white drop-shadow-lg">{name}</h3>
-          </div>
-        </div>
-        
-        {/* Floating Hearts */}
-        <AnimatePresence>
-          {hearts.map((heart) => (
-            <motion.div
-              key={heart.id}
-              className="absolute pointer-events-none"
-              style={{ 
-                left: `${heart.x}%`, 
-                top: `${heart.y}%`,
-              }}
-              initial={{ 
-                opacity: 1, 
-                scale: 0, 
-                y: 0,
-                rotate: 0,
-              }}
-              animate={{ 
-                opacity: [1, 1, 0], 
-                scale: [0, heart.scale, heart.scale * 0.8],
-                y: -150,
-                rotate: heart.rotation,
-              }}
-              exit={{ opacity: 0 }}
-              transition={{ 
-                duration: 1.2,
-                ease: "easeOut",
-              }}
+      <AnimatePresence mode="wait">
+        <motion.div 
+          key={`${name}-${image}`}
+          className="relative overflow-visible rounded-3xl glass shadow-card transition-all duration-500 hover:shadow-card-hover hover:-translate-y-2"
+          initial={{ opacity: 0, scale: 0.8, x: 0 }}
+          animate={{ 
+            opacity: isExiting ? 0 : 1, 
+            scale: isExiting ? 0.8 : 1,
+            x: isExiting ? (exitDirection === "right" ? 200 : -200) : 0,
+            rotate: isExiting ? (exitDirection === "right" ? 15 : -15) : 0,
+          }}
+          exit={{ opacity: 0, scale: 0.8, x: exitDirection === "right" ? 200 : -200 }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
+        >
+          {/* Image Container */}
+          <div className="relative w-64 h-80 sm:w-72 sm:h-96 overflow-hidden rounded-3xl">
+            <img
+              src={image}
+              alt={name}
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            />
+            
+            {/* Gradient Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+            
+            {/* Score Badge */}
+            <motion.div 
+              className="absolute top-4 right-4 flex items-center gap-1.5 px-3 py-1.5 rounded-full glass shadow-lg"
+              animate={isAnimating ? { scale: [1, 1.2, 1] } : {}}
+              transition={{ duration: 0.3 }}
             >
-              <Heart 
-                className="w-8 h-8 text-primary fill-primary drop-shadow-lg" 
-                style={{ filter: 'drop-shadow(0 0 8px hsl(340, 82%, 62%))' }}
-              />
+              <Heart className="w-4 h-4 text-primary fill-primary" />
+              <span className="font-bold text-foreground">{score}</span>
             </motion.div>
-          ))}
-        </AnimatePresence>
-      </div>
+            
+            {/* Name */}
+            <div className="absolute bottom-4 left-4 right-4">
+              <h3 className="text-xl font-bold text-white drop-shadow-lg">{name}</h3>
+            </div>
+          </div>
+          
+          {/* Floating Hearts */}
+          <AnimatePresence>
+            {hearts.map((heart) => (
+              <motion.div
+                key={heart.id}
+                className="absolute pointer-events-none"
+                style={{ 
+                  left: `${heart.x}%`, 
+                  top: `${heart.y}%`,
+                }}
+                initial={{ 
+                  opacity: 1, 
+                  scale: 0, 
+                  y: 0,
+                  rotate: 0,
+                }}
+                animate={{ 
+                  opacity: [1, 1, 0], 
+                  scale: [0, heart.scale, heart.scale * 0.8],
+                  y: -150,
+                  rotate: heart.rotation,
+                }}
+                exit={{ opacity: 0 }}
+                transition={{ 
+                  duration: 1.2,
+                  ease: "easeOut",
+                }}
+              >
+                <Heart 
+                  className="w-8 h-8 text-primary fill-primary drop-shadow-lg" 
+                  style={{ filter: 'drop-shadow(0 0 8px hsl(340, 82%, 62%))' }}
+                />
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
+      </AnimatePresence>
       
       {/* Action Buttons */}
       <div className="flex gap-4 mt-6">
@@ -167,6 +186,7 @@ const CatCard = ({ image, name, score, onHot, onNot, isAnimating, hearts }: CatC
           size="lg"
           onClick={onNot}
           className="rounded-full w-14 h-14 p-0"
+          disabled={isExiting}
         >
           <X className="w-6 h-6" />
         </Button>
@@ -175,6 +195,7 @@ const CatCard = ({ image, name, score, onHot, onNot, isAnimating, hearts }: CatC
           size="lg"
           onClick={onHot}
           className="rounded-full w-14 h-14 p-0"
+          disabled={isExiting}
         >
           <Flame className="w-6 h-6" />
         </Button>
@@ -184,25 +205,39 @@ const CatCard = ({ image, name, score, onHot, onNot, isAnimating, hearts }: CatC
 };
 
 const CatMemChex = () => {
-  const [scores, setScores] = useState<{ cat1: number; cat2: number }>(() => {
-    const saved = localStorage.getItem("catmemchex-scores");
-    return saved ? JSON.parse(saved) : { cat1: 0, cat2: 0 };
-  });
-  
-  const [animating, setAnimating] = useState<{ cat1: boolean; cat2: boolean }>({
-    cat1: false,
-    cat2: false,
+  const [currentModels, setCurrentModels] = useState<{ card1: number; card2: number }>({
+    card1: 0,
+    card2: 1,
   });
 
-  const [hearts, setHearts] = useState<{ cat1: FloatingHeart[]; cat2: FloatingHeart[] }>({
-    cat1: [],
-    cat2: [],
+  const [scores, setScores] = useState<Record<number, number>>(() => {
+    const saved = localStorage.getItem("catmemchex-scores-v2");
+    return saved ? JSON.parse(saved) : {};
+  });
+  
+  const [animating, setAnimating] = useState<{ card1: boolean; card2: boolean }>({
+    card1: false,
+    card2: false,
+  });
+
+  const [exiting, setExiting] = useState<{ card1: boolean; card2: boolean }>({
+    card1: false,
+    card2: false,
+  });
+
+  const [exitDirection, setExitDirection] = useState<{ card1: "left" | "right" | null; card2: "left" | "right" | null }>({
+    card1: null,
+    card2: null,
+  });
+
+  const [hearts, setHearts] = useState<{ card1: FloatingHeart[]; card2: FloatingHeart[] }>({
+    card1: [],
+    card2: [],
   });
 
   const [heartId, setHeartId] = useState(0);
   const audioContextRef = useRef<AudioContext | null>(null);
 
-  // Initialize audio context on first interaction
   const getAudioContext = useCallback(() => {
     if (!audioContextRef.current) {
       audioContextRef.current = createAudioContext();
@@ -214,10 +249,19 @@ const CatMemChex = () => {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("catmemchex-scores", JSON.stringify(scores));
+    localStorage.setItem("catmemchex-scores-v2", JSON.stringify(scores));
   }, [scores]);
 
-  const spawnHearts = useCallback((cat: "cat1" | "cat2") => {
+  const getNextModelIndex = (currentIndex: number, otherCardIndex: number) => {
+    let nextIndex = (currentIndex + 1) % models.length;
+    // Avoid showing the same model on both cards
+    if (nextIndex === otherCardIndex) {
+      nextIndex = (nextIndex + 1) % models.length;
+    }
+    return nextIndex;
+  };
+
+  const spawnHearts = useCallback((card: "card1" | "card2") => {
     const newHearts: FloatingHeart[] = Array.from({ length: 6 }, (_, i) => ({
       id: heartId + i,
       x: 20 + Math.random() * 60,
@@ -227,30 +271,56 @@ const CatMemChex = () => {
     }));
 
     setHeartId((prev) => prev + 6);
-    setHearts((prev) => ({ ...prev, [cat]: [...prev[cat], ...newHearts] }));
+    setHearts((prev) => ({ ...prev, [card]: [...prev[card], ...newHearts] }));
 
-    // Remove hearts after animation
     setTimeout(() => {
       setHearts((prev) => ({
         ...prev,
-        [cat]: prev[cat].filter((h) => !newHearts.find((nh) => nh.id === h.id)),
+        [card]: prev[card].filter((h) => !newHearts.find((nh) => nh.id === h.id)),
       }));
     }, 1500);
   }, [heartId]);
 
-  const handleHot = (cat: "cat1" | "cat2") => {
-    setScores((prev) => ({ ...prev, [cat]: prev[cat] + 1 }));
-    setAnimating((prev) => ({ ...prev, [cat]: true }));
-    spawnHearts(cat);
-    playHotSound(getAudioContext());
-    setTimeout(() => setAnimating((prev) => ({ ...prev, [cat]: false })), 300);
+  const transitionToNextCard = (card: "card1" | "card2", direction: "left" | "right") => {
+    setExiting((prev) => ({ ...prev, [card]: true }));
+    setExitDirection((prev) => ({ ...prev, [card]: direction }));
+
+    setTimeout(() => {
+      const otherCard = card === "card1" ? "card2" : "card1";
+      setCurrentModels((prev) => ({
+        ...prev,
+        [card]: getNextModelIndex(prev[card], prev[otherCard]),
+      }));
+      setExiting((prev) => ({ ...prev, [card]: false }));
+      setExitDirection((prev) => ({ ...prev, [card]: null }));
+    }, 500);
   };
 
-  const handleNot = (cat: "cat1" | "cat2") => {
-    setAnimating((prev) => ({ ...prev, [cat]: true }));
-    playNotSound(getAudioContext());
-    setTimeout(() => setAnimating((prev) => ({ ...prev, [cat]: false })), 300);
+  const handleHot = (card: "card1" | "card2") => {
+    const modelId = models[currentModels[card]].id;
+    setScores((prev) => ({ ...prev, [modelId]: (prev[modelId] || 0) + 1 }));
+    setAnimating((prev) => ({ ...prev, [card]: true }));
+    spawnHearts(card);
+    playHotSound(getAudioContext());
+    
+    setTimeout(() => {
+      setAnimating((prev) => ({ ...prev, [card]: false }));
+      transitionToNextCard(card, "right");
+    }, 600);
   };
+
+  const handleNot = (card: "card1" | "card2") => {
+    setAnimating((prev) => ({ ...prev, [card]: true }));
+    playNotSound(getAudioContext());
+    
+    setTimeout(() => {
+      setAnimating((prev) => ({ ...prev, [card]: false }));
+      transitionToNextCard(card, "left");
+    }, 400);
+  };
+
+  const card1Model = models[currentModels.card1];
+  const card2Model = models[currentModels.card2];
 
   return (
     <div className="min-h-screen bg-background flex flex-col overflow-hidden">
@@ -318,13 +388,15 @@ const CatMemChex = () => {
       <main className="flex-1 flex items-center justify-center px-4 pb-12">
         <div className="flex flex-col sm:flex-row gap-8 sm:gap-12 items-center">
           <CatCard
-            image={cat1Image}
-            name="Ginger"
-            score={scores.cat1}
-            onHot={() => handleHot("cat1")}
-            onNot={() => handleNot("cat1")}
-            isAnimating={animating.cat1}
-            hearts={hearts.cat1}
+            image={card1Model.image}
+            name={card1Model.name}
+            score={scores[card1Model.id] || 0}
+            onHot={() => handleHot("card1")}
+            onNot={() => handleNot("card1")}
+            isAnimating={animating.card1}
+            hearts={hearts.card1}
+            isExiting={exiting.card1}
+            exitDirection={exitDirection.card1}
           />
           
           {/* VS Badge */}
@@ -337,13 +409,15 @@ const CatMemChex = () => {
           </motion.div>
           
           <CatCard
-            image={cat2Image}
-            name="Shadow"
-            score={scores.cat2}
-            onHot={() => handleHot("cat2")}
-            onNot={() => handleNot("cat2")}
-            isAnimating={animating.cat2}
-            hearts={hearts.cat2}
+            image={card2Model.image}
+            name={card2Model.name}
+            score={scores[card2Model.id] || 0}
+            onHot={() => handleHot("card2")}
+            onNot={() => handleNot("card2")}
+            isAnimating={animating.card2}
+            hearts={hearts.card2}
+            isExiting={exiting.card2}
+            exitDirection={exitDirection.card2}
           />
         </div>
       </main>
