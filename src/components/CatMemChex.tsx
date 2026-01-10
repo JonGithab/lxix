@@ -72,11 +72,21 @@ import model67Image from "@/assets/model67.jpg";
 import model68Image from "@/assets/model68.jpg";
 import model69Image from "@/assets/model69.jpg";
 import model70Image from "@/assets/model70.jpg";
+import model71Image from "@/assets/model71.jpg";
+import model72Image from "@/assets/model72.jpg";
+import model73Image from "@/assets/model73.jpg";
+import model74Image from "@/assets/model74.jpg";
+import model75Image from "@/assets/model75.jpg";
+import model76Image from "@/assets/model76.jpg";
+import model77Image from "@/assets/model77.jpg";
+import model78Image from "@/assets/model78.jpg";
+import model79Image from "@/assets/model79.jpg";
+import model80Image from "@/assets/model80.jpg";
 
 // Region types
-type Region = "All" | "Global" | "Philippines" | "Colombia" | "Venezuela" | "Slavic";
+type Region = "All" | "Global" | "Philippines" | "Colombia" | "Venezuela" | "Slavic" | "Korea";
 
-const regions: Region[] = ["All", "Global", "Philippines", "Colombia", "Venezuela", "Slavic"];
+const regions: Region[] = ["All", "Global", "Philippines", "Colombia", "Venezuela", "Slavic", "Korea"];
 
 // Model data - diverse portrait pool with regions
 const models = [
@@ -153,6 +163,17 @@ const models = [
   { id: 68, name: "Zuzana", image: model68Image, region: "Slavic" as Region },
   { id: 69, name: "Elena", image: model69Image, region: "Slavic" as Region },
   { id: 70, name: "Maja", image: model70Image, region: "Slavic" as Region },
+  // Korea
+  { id: 71, name: "Jiyeon", image: model71Image, region: "Korea" as Region },
+  { id: 72, name: "Sooyoung", image: model72Image, region: "Korea" as Region },
+  { id: 73, name: "Minji", image: model73Image, region: "Korea" as Region },
+  { id: 74, name: "Yuna", image: model74Image, region: "Korea" as Region },
+  { id: 75, name: "Eunji", image: model75Image, region: "Korea" as Region },
+  { id: 76, name: "Hyerin", image: model76Image, region: "Korea" as Region },
+  { id: 77, name: "Seulgi", image: model77Image, region: "Korea" as Region },
+  { id: 78, name: "Dahyun", image: model78Image, region: "Korea" as Region },
+  { id: 79, name: "Chaeyoung", image: model79Image, region: "Korea" as Region },
+  { id: 80, name: "Nayeon", image: model80Image, region: "Korea" as Region },
 ];
 
 // Sound effect utilities using Web Audio API
