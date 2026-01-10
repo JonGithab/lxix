@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Nunito:wght@400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Nunito:wght@400;600;700;800&display=swap');
 
 @layer base {
   :root {
@@ -166,6 +166,35 @@
   background-clip: text;
   color: transparent;
   animation: holographic 3s ease-in-out infinite;
+  filter: drop-shadow(0 0 10px hsl(340 100% 65% / 0.5)) drop-shadow(0 0 30px hsl(280 100% 70% / 0.3));
+}
+
+.splash-title {
+  font-family: 'Bungee Shade', cursive;
+  background: linear-gradient(
+    90deg,
+    hsl(340, 100%, 65%) 0%,
+    hsl(300, 100%, 70%) 15%,
+    hsl(260, 100%, 75%) 30%,
+    hsl(200, 100%, 70%) 45%,
+    hsl(160, 100%, 65%) 60%,
+    hsl(60, 100%, 65%) 75%,
+    hsl(340, 100%, 65%) 100%
+  );
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: holographic-splash 4s linear infinite;
+  filter: drop-shadow(0 0 8px hsl(340 100% 65% / 0.6)) 
+          drop-shadow(0 2px 4px hsl(280 100% 70% / 0.4))
+          drop-shadow(0 0 20px hsl(200 100% 65% / 0.3));
+  letter-spacing: 2px;
+}
+
+@keyframes holographic-splash {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 300% 50%; }
 }
 
 @keyframes sparkle {
