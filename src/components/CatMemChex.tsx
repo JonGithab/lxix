@@ -231,7 +231,7 @@ const regions: Region[] = ["All", "Global", "Philippines", "Colombia", "Venezuel
 // Model data - diverse portrait pool with regions
 const models = [
   { id: 2, name: "Althea", image: model31Image, region: "Philippines" as Region },
-  { id: 3, name: "Sofia", image: model3Image, region: "Global" as Region },
+  { id: 3, name: "Adriana", image: model51Image, region: "Venezuela" as Region },
   { id: 4, name: "Emma", image: model4Image, region: "Global" as Region },
   { id: 5, name: "Layla", image: model5Image, region: "Global" as Region },
   { id: 6, name: "Priya", image: model6Image, region: "Global" as Region },
@@ -282,7 +282,7 @@ const models = [
   { id: 49, name: "Laura", image: model49Image, region: "Colombia" as Region },
   { id: 50, name: "Diana", image: model50Image, region: "Colombia" as Region },
   // Venezuela
-  { id: 51, name: "Adriana", image: model51Image, region: "Venezuela" as Region },
+  { id: 51, name: "Sofia", image: model3Image, region: "Global" as Region },
   { id: 53, name: "Génesis", image: model53Image, region: "Venezuela" as Region },
   { id: 54, name: "Mariángel", image: model54Image, region: "Venezuela" as Region },
   { id: 55, name: "Oriana", image: model55Image, region: "Venezuela" as Region },
