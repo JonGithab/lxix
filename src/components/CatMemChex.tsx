@@ -779,15 +779,25 @@ const CatMemChex = () => {
     return filtered.filter(m => !votedModels.has(m.id));
   }, [votedModels]);
 
+  // Default models: Althea (id 31) and Adriana (id 51)
+  const defaultCard1Index = models.findIndex(m => m.id === 31);
+  const defaultCard2Index = models.findIndex(m => m.id === 51);
+  
   const [currentModels, setCurrentModels] = useState<{ card1: number; card2: number }>(() => {
     const saved = localStorage.getItem("catmemchex-current");
     if (saved) {
-      return JSON.parse(saved);
+      const parsed = JSON.parse(saved);
+      // Validate saved indices are within bounds
+      if (parsed.card1 >= 0 && parsed.card1 < models.length && 
+          parsed.card2 >= 0 && parsed.card2 < models.length) {
+        return parsed;
+      }
     }
     // Default to Althea (id 31) and Adriana (id 51)
-    const altheaIndex = models.findIndex(m => m.id === 31);
-    const adrianaIndex = models.findIndex(m => m.id === 51);
-    return { card1: altheaIndex >= 0 ? altheaIndex : 0, card2: adrianaIndex >= 0 ? adrianaIndex : 1 };
+    return { 
+      card1: defaultCard1Index >= 0 ? defaultCard1Index : 0, 
+      card2: defaultCard2Index >= 0 ? defaultCard2Index : 1 
+    };
   });
 
   const [scores, setScores] = useState<Record<number, number>>(() => {
