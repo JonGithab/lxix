@@ -722,7 +722,10 @@ const CatMemChex = () => {
     if (saved) {
       return JSON.parse(saved);
     }
-    return { card1: 0, card2: 1 };
+    // Default to Althea (id 31) and Adriana (id 51)
+    const altheaIndex = models.findIndex(m => m.id === 31);
+    const adrianaIndex = models.findIndex(m => m.id === 51);
+    return { card1: altheaIndex >= 0 ? altheaIndex : 0, card2: adrianaIndex >= 0 ? adrianaIndex : 1 };
   });
 
   const [scores, setScores] = useState<Record<number, number>>(() => {
