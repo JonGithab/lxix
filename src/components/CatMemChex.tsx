@@ -988,12 +988,8 @@ const CatMemChex = () => {
           <motion.div
             animate={{ y: [0, -8, 0] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="relative flex items-center justify-center"
           >
             <Heart className="w-8 h-8 text-primary fill-primary" />
-            <span className="absolute inset-0 flex items-center justify-center text-primary-foreground text-xs font-bold">
-              6
-            </span>
           </motion.div>
           <h1 className="text-4xl sm:text-5xl font-bold splash-title">
             Lovable
@@ -1001,12 +997,8 @@ const CatMemChex = () => {
           <motion.div
             animate={{ y: [0, -8, 0] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-            className="relative flex items-center justify-center"
           >
             <Heart className="w-8 h-8 text-primary fill-primary" />
-            <span className="absolute inset-0 flex items-center justify-center text-primary-foreground text-xs font-bold">
-              9
-            </span>
           </motion.div>
         </div>
         <p className="text-muted-foreground text-lg">vote for your favorite</p>
