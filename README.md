@@ -1,4 +1,4 @@
-# Welcome to your Voting Project
+# Welcome to your AI Voting Project
 
 ## Project info
 
