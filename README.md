@@ -4,8 +4,6 @@ A modern "Hot or Not" style voting application where users compare stunning AI-g
 
 🌐 **Live Demo**: [https://lxix.lovable.app](https://lxix.lovable.app)
 
-![Lovable App](https://lovable.dev/opengraph-image-p98pqg.png)
-
 ---
 
 ## ✨ Features
@@ -270,5 +268,3 @@ This project is private and proprietary.
 4. Submit a pull request
 
 ---
-
-Built with ❤️ using [Lovable](https://lovable.dev)
